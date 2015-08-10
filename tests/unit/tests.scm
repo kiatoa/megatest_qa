@@ -9,6 +9,7 @@
 
 ;;  strftime('%m/%d/%Y %H:%M:%S','now','localtime')
 
+(use posix)
 (require-extension test)
 (require-extension regex)
 (require-extension srfi-18)
