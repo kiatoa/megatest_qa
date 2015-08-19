@@ -3,3 +3,7 @@ runs/*
 links/*
 megatest.db
 logs/*
+fullrun/tmp/*
+fullrun/configs/*localconfig
+fullrun/db/*
+fullrun/logs/*
