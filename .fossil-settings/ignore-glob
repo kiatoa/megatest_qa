@@ -7,3 +7,5 @@ fullrun/tmp/*
 fullrun/configs/*localconfig
 fullrun/db/*
 fullrun/logs/*
+fdktestqa/simplelinks/*
+fdktestqa/simpleruns/*

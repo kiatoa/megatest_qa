@@ -1,8 +1,21 @@
+[setup]
+submegatest #{getenv MTTESTDIR}/fullrun
+
 [ezsteps]
 cleantop $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -remove-runs -target ubuntu/nfs/none -runname release_toplevel -testpatt %
-runall   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run -testpatt %            -target ubuntu/nfs/none -runname release_toplevel -runwait
-runtop   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run -testpatt all_toplevel -target ubuntu/nfs/none -runname release_toplevel -rerun FAIL -preclean -runwait
+runall   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run -testpatt %            -target ubuntu/nfs/none -runname release_toplevel -run-wait
+runtop   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run -testpatt all_toplevel -target ubuntu/nfs/none -runname release_toplevel -rerun FAIL -preclean -run-wait
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_toplevel -target ubuntu/nfs/none -runname release_toplevel 
+
+[logpro]
+cleantop ;;
+  (expect:warning in "LogFileBody" = 0 "Warn if can't remove files" #/ERROR: There was a problem removing/)
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+runall ;;
+  (expect:required  in "LogFileBody" > 0 "need to see at least one unrecognised waiton" #/ERROR: test special has unrecognised waiton testname/)
+  (expect:required  in "LogFileBody" > 0 "need to see at least one dynamic_waiton"      #/ERROR: test dynamic_waiton has listed itself as a waiton/)
+  (expect:required  in "LogFileBody" > 0 "expecting to see some Failed launch"          #/ERROR: Failed to launch test blocktestxz/)
+  (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 [requirements]
 # waiton  #{getenv ALL_TOPLEVEL_TESTS}
