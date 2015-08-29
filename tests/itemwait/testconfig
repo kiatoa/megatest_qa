@@ -1,4 +1,6 @@
 # test2 from the tests/Makefile
+[setup]
+submegatest #{getenv MTTESTDIR}/fdktestqa/testqa 
 
 [var]
 tname itemwait
@@ -13,6 +15,15 @@ clean      $MTRUNNER $MTTESTDIR/fdktestqa/testqa $MTPATH megatest -remove-runs -
 runbigrun3 $MTRUNNER $MTTESTDIR/fdktestqa/testqa $MTPATH nbfake megatest -run     -testpatt bigrun3 -target a/bigrun3 -runname #{get var tname}
 # watchrun watches until it sees at least one RUNNING in bigrun and one PASS in bigrun2
 watchrun   sleep 15;watchrun.sh #{get var tname}
+
+[logpro]
+clean ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+runbigrun3 ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+watchrun ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+  (expect:error in "LogFileBody" = 0 "FAIL is fail" #/FAIL/)
 
 [requirements]
 # waiton  #{getenv ALL_TOPLEVEL_TESTS}
