@@ -1,7 +1,9 @@
 # test2 from the tests/Makefile
+[setup]
+submegatest #{getenv MTTESTDIR}/dep-tests
 
 [var]
-tname itemwait
+tname deptest
 
 [ezsteps]
 
