@@ -15,11 +15,11 @@ mode itemwait
 # Replace foo/ with bar/
 # itemmap foo/ bar/
 # 
-itemmap .*/
+itemmap bork blah
 
 # Iteration for your tests are controlled by the items section
 [items]
-NUMBER #{scheme (string-intersperse (map (lambda (x)(conc "blah/" x)) \
+NUMBER #{scheme (string-intersperse (map (lambda (x)(conc "bork/" x)) \
                                          (map number->string (sort (let loop ((a 0)(res '())) \
                                                                         (if (<= a (or (any->number (get-environment-variable "NUMTESTS")) 2500)) \
                                                                             (loop (+ a 1)(cons a res)) res)) <))) " ")}
