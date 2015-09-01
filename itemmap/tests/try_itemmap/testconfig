@@ -1,0 +1,29 @@
+[ezsteps]
+echo_testcase echo INFO: $MT_TEST_NAME $MT_ITEMPATH $TESTCASE
+
+
+[requirements]
+waiton try_waiton
+mode itemwait
+itemmap ([^/]+)/.* #{getenv WAITON_SUBST}/%/\\1
+  X(\w+) \\1
+
+
+[items]
+TESTCASE  #{getenv TESTCASES}
+TESTITEM  fluff
+
+
+[logpro]
+echo_testcase
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Testing itemmap substitution
+criteria utility
