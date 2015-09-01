@@ -1,3 +1,6 @@
+[setup]
+submegatest #{getenv MTTESTDIR}/fullrun
+
 [var]
 targ -target ubuntu/nfs/all_toplevel
 tp   -testpatt %
@@ -8,7 +11,7 @@ runall   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run         #{get var tp
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_toplevel #{get var targ} -runname release_toplevel 
 
 [requirements]
-# waiton  #{getenv ALL_TOPLEVEL_TESTS}
+waiton itemwait 
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-# mode toplevel
+mode toplevel

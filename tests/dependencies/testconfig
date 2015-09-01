@@ -12,3 +12,6 @@ cleansimple   $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -remove-runs -test
 simple        $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -run         -testpatt test2/%/ptran -target simple/0 -runname #{get var tname}
 simpleresults $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -list-runs #{get var name}           -target simple/0
 
+[requirements]
+waiton rollup
+mode toplevel

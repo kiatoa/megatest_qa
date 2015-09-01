@@ -1,3 +1,6 @@
+[setup]
+submegatest #{getenv MTTESTDIR}/fullrun
+
 [ezsteps]
 clean    $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -remove-runs -testpatt % -target ubuntu/nfs/none -runname release_testpatt
 cleanres $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
@@ -6,7 +9,7 @@ runitems $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run -testpatt runfirst/%
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
 
 [requirements]
-# waiton  #{getenv ALL_TOPLEVEL_TESTS}
+waiton dependencies 
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-# mode toplevel
+mode toplevel
