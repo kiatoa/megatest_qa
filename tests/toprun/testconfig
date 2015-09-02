@@ -12,7 +12,7 @@ runtop   $MTRUNNER #{get misc rdir} $MTPATH megatest -runtests all_toplevel     
 results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname} -target ubuntu/nfs/none
 
 [requirements]
-waiton testpatt_envvar
+# waiton testpatt_envvar
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel

@@ -9,7 +9,7 @@ runitems $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run -testpatt runfirst/%
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
 
 [requirements]
-waiton dependencies 
+# waiton dependencies 
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel

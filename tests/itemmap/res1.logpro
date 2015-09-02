@@ -8,7 +8,7 @@
   (lambda (testname itempath)
     (expect:required in "LogFileBody" >= 1 
         (conc   "Expect " testname (if itempath (conc "/" itempath) ""))
-        (regexp (conc "^\\s+Test: " testname (if itempath (conc "\\(" itempath "\\)") "") 
+        (regexp (conc "^\\s+Test: " testname (if itempath (conc "\\(" itempath "\\)") "")
 	              "\\s+State: COMPLETED\\s+Status: PASS"))))
   (list "try_waiton" "try_waiton"         "try_waiton"         "try_itemmap"    "try_itemmap")
   (list #f           "waiton/xtra1/test2" "waiton/xtra0/test2" #f               "test2/xtra_item"))

@@ -26,7 +26,7 @@ watchrun ;;
   (expect:error in "LogFileBody" = 0 "FAIL is fail" #/FAIL/)
 
 [requirements]
-waiton testpatt
+# waiton testpatt
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
