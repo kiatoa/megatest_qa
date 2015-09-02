@@ -1,0 +1,38 @@
+# test2 from the tests/Makefile
+[setup]
+submegatest #{getenv MTTESTDIR}/itemmap
+
+[pre-launch-env-vars]
+NUMTESTS 20
+
+[ezsteps]
+
+# Set things up
+clean $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
+run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt % -target std/0 -runname run1 -run-wait
+res1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -target std/0
+run2  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap -target std/0 -runname run2 -run-wait
+res2  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run2 -target std/0
+run3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap/test1/xtra_item -target std/0 -runname run3 -run-wait
+res3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run3
+-target std/0
+
+
+[logpro]
+clean ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+run1 ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+run2 ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+run3 ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+
+[requirements]
+waiton testpatt
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+mode toplevel
+
+
+# test2 : fullprep
