@@ -9,8 +9,11 @@ mtpath #{shell readlink -f ../../bin}
 [ezsteps]
 clean    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -remove-runs -testpatt %                    -target  ubuntu/nfs/none -runname #{get var tname}%
 part1    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -run         -testpatt ez_pass,runfirst/a/% -reqtarg ubuntu/nfs/none -runname #{get var tname}   -preclean
+# This next one is impossible to satisfy - it should give up after a short while
 part2    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -run         -testpatt  %/,%/ai             -reqtarg ubuntu/nfs/none -runname #{get var tname}_a -preclean
+# This next one is impossible to satisfy - should give up after a while
 part3    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -runtests %/,%/ai                           -reqtarg ubuntu/nfs/none -runname #{get var tname}_b -preclean
+# This on should succeed in running.
 part4    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -run         -testpatt  runfirst/%,%/ai     -reqtarg ubuntu/nfs/none -runname #{get var tname}_a -preclean
 part5    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -run         -testpatt %/,%/winter          -reqtarg ubuntu/nfs/none -runname #{get var tname}_a -preclean
 part6    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -set-state-status COMPLETED,FORCED :state COMPLETED :status PASS -testpatt ez_p%s,runfirst/ -target ubuntu/nfs/none -runname #{get var tname}
@@ -18,6 +21,15 @@ part6    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -set-state-sta
 results   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs #{get var tname}   -target ubuntu/nfs/none
 results_a $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs #{get var tname}_a -target ubuntu/nfs/none
 results_b $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs #{get var tname}_b -target ubuntu/nfs/none
+
+[logpro]
+clean (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
+part1 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
+part2 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
+part3 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
+part4 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
+part5 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
+part6 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
 
 [requirements]
 waiton  fullrun

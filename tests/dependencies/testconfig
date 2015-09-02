@@ -9,8 +9,8 @@ tname deptest
 
 # Set things up
 cleansimple   $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -remove-runs -testpatt %             -target simple/0 -runname #{get var tname}
-simple        $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -run         -testpatt test2/%/ptran -target simple/0 -runname #{get var tname}
-simpleresults $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -list-runs #{get var name}           -target simple/0
+simple        $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -run         -testpatt test2/%/ptran -target simple/0 -runname #{get var tname} -run-wait
+simpleresults $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -list-runs #{get var tname}           -target simple/0
 
 [requirements]
 waiton rollup

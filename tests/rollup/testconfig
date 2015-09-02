@@ -1,4 +1,6 @@
 # test2 from the tests/Makefile
+[setup]
+megatestsubarea #{getenv MTTESTDIR}/fullrun
 
 [var]
 tname rollup
@@ -17,6 +19,11 @@ setstate $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -set-state-status INCOMP
 rerun    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run         -testpatt  runfirst/spring     -reqtarg ubuntu/nfs/none -runname #{get var tname} -preclean -rerun PASS
 
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs #{get var tname} -target ubuntu/nfs/none
+
+[logpro]
+runfirst (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
+setstate (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
+rerun    (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
 
 [requirements]
 # waiton  #{getenv ALL_TOPLEVEL_TESTS}
