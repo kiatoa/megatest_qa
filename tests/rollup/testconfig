@@ -9,21 +9,25 @@ tname rollup
 
 # Set things up
 clean    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -remove-runs -testpatt %                    -target  ubuntu/nfs/none -runname #{get var tname}%
-runfirst $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -runtests runfirst/% -reqtarg ubuntu/nfs/none -runname #{get var tname}   -preclean
+runfirst $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -runtests runfirst/% -reqtarg ubuntu/nfs/none -runname #{get var tname}   -preclean -run-wait
 firstres $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -list-runs #{get var tname}   -target ubuntu/nfs/none
 
 # Set one test item to INCOMPLETE
 setstate $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -set-state-status INCOMPLETE,FAIL :state COMPLETED :status PASS -testpatt runfirst/b/2 -target ubuntu/nfs/none -runname #{get var tname}
 
 # Rerun a different test item
-rerun    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run         -testpatt  runfirst/spring     -reqtarg ubuntu/nfs/none -runname #{get var tname} -preclean -rerun PASS
+rerun    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run         -testpatt  runfirst/spring     -reqtarg ubuntu/nfs/none -runname #{get var tname} -preclean -rerun PASS -run-wait
 
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs #{get var tname} -target ubuntu/nfs/none
 
 [logpro]
-runfirst (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
+runfirst ;;
+  (expect:ignore in "LogFileBody" >= 0 "Ignore error \"This should evoke an error.\"" #/This should evoke an error/) 
+  (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
 setstate (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
-rerun    (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
+rerun    ;;
+  (expect:ignore in "LogFileBody" >= 0 "NFS causes rm to fail sometimes" #/ERROR: There was a problem removing/)
+  (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
 
 [requirements]
 # waiton  #{getenv ALL_TOPLEVEL_TESTS}
