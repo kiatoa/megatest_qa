@@ -11,7 +11,8 @@ runall   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run         #{get var tp
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_toplevel #{get var targ} -runname release_toplevel 
 
 [requirements]
-# waiton itemwait 
+# waiton itemwait
+priority 0
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel

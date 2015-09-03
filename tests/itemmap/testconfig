@@ -20,6 +20,7 @@ res3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run3
 
 [logpro]
 clean ;;
+  (expect:ignore in "LogFileBody" >= 0 "Ignore NFS releated issues" #/ERROR: There was a problem removing/)
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
 run1 ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
@@ -29,7 +30,8 @@ run3 ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 [requirements]
-waiton testpatt
+# waiton testpatt
+priority 0
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
