@@ -1,0 +1,15 @@
+;; (c) 2006,2007,2008,2009 Matthew Welland matt@kiatoa.com
+;;  
+;;   License GPL.
+
+(define logbody "LogFileBody")
+
+(for-each 
+  (lambda (testname itempath)
+    (expect:required in "LogFileBody" >= 1 
+        (conc   "Expect " testname (if itempath (conc "/" itempath) ""))
+        (regexp (conc "^\\s+Test: " testname (if itempath (conc "\\(" itempath "\\)") "") 
+	              "\\s+State: COMPLETED\\s+Status: PASS"))))
+  (list "try_waiton" "try_waiton"         "try_waiton"         "try_itemmap"    "try_itemmap")
+  (list #f           "waiton/xtra0/test1" "waiton/xtra1/test1" #f               "test1/xtra_item"))
+
