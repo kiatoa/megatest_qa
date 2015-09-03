@@ -14,8 +14,7 @@ res1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -targe
 run2  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap -target std/0 -runname run2 -run-wait
 res2  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run2 -target std/0
 run3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap/test1/xtra_item -target std/0 -runname run3 -run-wait
-res3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run3
--target std/0
+res3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run3 -target std/0
 
 
 [logpro]

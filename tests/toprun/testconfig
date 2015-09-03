@@ -7,8 +7,8 @@ submegatest #{getenv MTTESTDIR}/#{get misc rdir}
 
 [ezsteps]
 cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs -testpatt %     -target ubuntu/nfs/none -runname #{get misc rname} -testpatt %
-runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run -testpatt %             -target ubuntu/nfs/none -runname #{get misc rname} -runwait
-runtop   $MTRUNNER #{get misc rdir} $MTPATH megatest -runtests all_toplevel       -target ubuntu/nfs/none -runname #{get misc rname} -runwait
+runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run -testpatt %             -target ubuntu/nfs/none -runname #{get misc rname} -run-wait
+runtop   $MTRUNNER #{get misc rdir} $MTPATH megatest -runtests all_toplevel       -target ubuntu/nfs/none -runname #{get misc rname} -run-wait
 results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname} -target ubuntu/nfs/none
 
 [requirements]
