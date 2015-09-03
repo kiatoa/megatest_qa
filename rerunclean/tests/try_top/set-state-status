@@ -1,0 +1,24 @@
+#!/bin/bash
+################################################################################
+#  set-state-status test [test ...]
+#    Toggles state/status for tests 
+#
+################################################################################
+
+for subtest in "$@"; do
+
+  while read t test rest; do
+
+	testpatt=$(echo $test | sed -e 's#(#/#g' -e 's#)##')
+    STATUS=$(basename $testpatt)
+	
+	[[ $STATUS == $testpatt || $STATUS == PASS ]] && continue
+	
+	STATE=$([[ $STATUS == INCOMPLETE ]] && echo -n INCOMPLETE || echo -n COMPLETED)
+	
+	echo INFO: Setting STATE/STATUS to $STATE,$STATUS for $testpatt
+	$MT_MEGATEST -set-state-status $STATE,$STATUS -runname $MT_RUNNAME -testpatt $testpatt
+
+  done < <($MT_MEGATEST -list-runs $MT_RUNNAME -testpatt $subtest/% | grep Test:)
+
+done

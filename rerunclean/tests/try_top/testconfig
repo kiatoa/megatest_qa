@@ -1,0 +1,33 @@
+[ezsteps]
+run_tests echo INFO: $MT_TEST_NAME 
+mrk_tests set-state-status try_toplevel try_item
+rrn_tests rerunclean try_toplevel try_item
+
+
+[requirements]
+waiton try_toplevel try_item 
+mode toplevel
+
+
+[items]
+# No items for this test
+
+
+
+[logpro]
+run_tests
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+mrk_tests
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+rrn_tests
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Top level test for rerunclean behavior
+criteria utility

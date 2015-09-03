@@ -1,0 +1,24 @@
+[ezsteps]
+runtest   echo INFO: $MT_TEST_NAME $MT_ITEMPATH
+
+
+[requirements]
+
+
+[items]
+TEST #{getenv STATUS_LIST}
+
+
+[logpro]
+runtest
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Testing itemmap substitution
+criteria utility
