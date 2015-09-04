@@ -1,0 +1,8 @@
+;; (c) 2006,2007,2008,2009 Matthew Welland matt@kiatoa.com
+;;  
+;;   License GPL.
+
+
+(expect:required in "LogFileBody" > 0 "Tests run with items"  #/try_item/ )
+(expect:required in "LogFileBody" > 0 "Tests run at toplevel" #/try_toplevel/ )
+(expect:required in "LogFileBody" = 1 "Test run"              #/try_top/ )
