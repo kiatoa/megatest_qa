@@ -5,9 +5,6 @@
 #
 ################################################################################
 
-echo DEBUG: STATUS_PASS=$STATUS_PASS
-echo DEBUG: STATUS_FAIL=$STATUS_FAIL
-echo
 
 while read t test rest; do
 

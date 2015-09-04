@@ -5,9 +5,5 @@
 #
 ################################################################################
 
-#for subtest in "$@"; do
-#  echo INFO: Rerunning ${STATUS_FAIL// /,} tests in $subtest
-#  $MT_MEGATEST -run -target $MT_TARGET -runname $MT_RUNNAME -testpatt $subtest -preclean -rerun ${STATUS_FAIL// /,}
-#done
 echo INFO: Rerunning ${STATUS_FAIL// /,} tests
 $MT_MEGATEST -run -target $MT_TARGET -runname $MT_RUNNAME -preclean -rerun ${STATUS_FAIL// /,}
