@@ -1,12 +1,12 @@
 [ezsteps]
-runtest   echo INFO: $MT_TEST_NAME $MT_ITEMPATH
+runtest   echo INFO: $MT_TEST_NAME
 
 
 [requirements]
 
 
 [items]
-TEST #{getenv STATUS_LIST}
+# No items for this test
 
 
 [logpro]
@@ -20,5 +20,5 @@ runtest
 [test_meta]
 author tyardeni
 owner tardeni
-description Testing itemmap substitution
+description Testing toplevel state/status
 criteria utility

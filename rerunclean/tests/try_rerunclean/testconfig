@@ -1,17 +1,16 @@
 [ezsteps]
 run_tests echo INFO: $MT_TEST_NAME 
-mrk_tests set-state-status try_toplevel try_item
-rrn_tests rerunclean try_toplevel try_item
+mrk_tests set-state-status
+rrn_tests rerunclean
 
 
 [requirements]
-waiton try_toplevel try_item 
+waiton itemwait toplevel_ABORT toplevel_CHECK toplevel_FAIL toplevel_INCOMPLETE toplevel_PASS 
 mode toplevel
 
 
 [items]
 # No items for this test
-
 
 
 [logpro]

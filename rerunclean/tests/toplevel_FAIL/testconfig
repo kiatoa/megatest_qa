@@ -1,0 +1,24 @@
+[ezsteps]
+runtest   echo INFO: $MT_TEST_NAME
+
+
+[requirements]
+
+
+[items]
+# No items for this test
+
+
+[logpro]
+runtest
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Testing toplevel state/status
+criteria utility
