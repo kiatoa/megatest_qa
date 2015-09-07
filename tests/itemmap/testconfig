@@ -13,9 +13,9 @@ run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt % -targ
 res1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -target std/0
 run2  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap -target std/0 -runname run2 -run-wait
 res2  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run2 -target std/0
-run3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap/test1/xtra_item -target std/0 -runname run3 -run-wait
+run3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap/testcase1/xtra.1 -target std/0 -runname run3 -run-wait
 res3  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run3 -target std/0
-run4  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap/%/xtra_item -target std/0 -runname run4 -run-wait
+run4  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_itemmap/%/xtra.2 -target std/0 -runname run4 -run-wait
 res4  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run4 -target std/0
 
 

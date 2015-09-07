@@ -3,15 +3,15 @@ echo_testcase echo INFO: $MT_TEST_NAME $MT_ITEMPATH $TESTCASE
 
 
 [requirements]
-waiton try_toplevel try_mapped
+waiton try_remapped
 mode itemwait
-itemmap ([^/]+)/.* X#{getenv WAITON_SUBST}/%/\1
-  X(\d+) \1
+itemmap /.*
 
 
 [items]
+TESTWAIT  #{getenv WAITON_SUBST}
+TESTXTRA  #{getenv TESTXTRAS}
 TESTCASE  #{getenv TESTCASES}
-TESTITEM  #{getenv TESTITEMS}
 
 
 [logpro]
@@ -25,5 +25,5 @@ echo_testcase
 [test_meta]
 author tyardeni
 owner tardeni
-description Testing itemmap substitution
+description Testing itemmap waiton
 criteria utility

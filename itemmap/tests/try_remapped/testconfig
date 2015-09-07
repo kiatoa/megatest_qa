@@ -3,12 +3,12 @@ echo_testcase echo INFO: $MT_TEST_NAME $MT_ITEMPATH $TESTCASE
 
 
 [requirements]
+# No requirements, waiton, etc
 
 
 [items]
-TESTWAIT  waiton
-TESTXTRA  xtra0 xtra1
-TESTCASE  #{getenv TESTCASES}
+TESTWAIT  #{getenv WAITON_SUBST}
+TESTXTRA  #{getenv TESTXTRAS}
 
 
 [logpro]
