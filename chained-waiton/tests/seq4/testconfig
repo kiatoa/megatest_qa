@@ -1,0 +1,26 @@
+[ezsteps]
+runtest echo INFO: $MT_TEST_NAME $MT_ITEMPATH
+
+
+[requirements]
+waiton test4 test4a
+mode itemwait
+
+
+[items]
+TESTCASE #{getenv TESTCASES}
+
+
+[logpro]
+runtest
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Toplevel test to validate waiton chaining
+criteria utility
