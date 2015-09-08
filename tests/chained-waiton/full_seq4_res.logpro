@@ -1,0 +1,32 @@
+
+(define (range n m)
+   (cond
+     ((= n m) (list n))
+     (else (cons n (range ((if (< n m) + -) n 1) m)))))
+
+
+;; Check tests on the "a" branch of the test sequence
+
+(for-each
+  (lambda (n)
+    (let ((rx  (conc "^\\s+Test: test" n "a\\(item"))
+	  (msg (conc   "Expect test" n "a(item...)")))
+      ;;(print "n=" n " regex=" rx " msg=" msg)
+      (expect:required in "LogFileBody" > 1 msg (regexp rx))))
+  (range 4 4))
+
+
+;; Check tests on the main branch of the test sequence
+
+(for-each
+  (lambda (n)
+    (let ((rx  (conc "^\\s+Test: test" n "\\(item"))
+	  (msg (conc   "Expect test" n "(item...)")))
+      ;;(print "n=" n " regex=" rx " msg=" msg)
+      (expect:required in "LogFileBody" > 1 msg (regexp rx))))
+  (range 0 4))
+
+
+;; Check the "sequence" test(s)
+
+(expect:required in "LogFileBody" > 1 "Expect seq4(item...)" #/^\s+Test: seq4\(item/ )

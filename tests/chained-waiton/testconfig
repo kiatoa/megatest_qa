@@ -1,0 +1,35 @@
+# test2 from the tests/Makefile
+[setup]
+submegatest #{getenv MTTESTDIR}/chained-waiton
+
+[pre-launch-env-vars]
+NUMTESTS 20
+
+[ezsteps]
+
+# Set things up
+clean          $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
+full_seq4      $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt seq4 -target std/0 -runname full_seq4 -run-wait
+full_seq4_res  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs full_seq4 -target std/0
+item_seq4      $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt seq4/item.1 -target std/0 -runname item_seq4 -run-wait
+item_seq4_res  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs item_seq4 -target std/0
+
+
+[logpro]
+clean ;;
+  (expect:ignore in "LogFileBody" >= 0 "Ignore NFS releated issues" #/ERROR: There was a problem removing/)
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+full_seq4 ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+item_seq4 ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+
+[requirements]
+# waiton testpatt
+priority 0
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+mode toplevel
+
+
+# test2 : fullprep
