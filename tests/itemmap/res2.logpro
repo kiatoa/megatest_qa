@@ -2,14 +2,14 @@
 ;;  
 ;;   License GPL.
 
-(define logbody "LogFileBody")
-
 (for-each 
   (lambda (testname itempath)
-    (expect:required in "LogFileBody" >= 1 
-        (conc   "Expect " testname (if itempath (conc "/" itempath) ""))
-        (regexp (conc "^\\s+Test: " testname (if itempath (conc "\\(" itempath "\\)") "")
-	              "\\s+State: COMPLETED\\s+Status: PASS"))))
+    (let (
+        (rxp (conc "^\\s+Test: " testname (if itempath (conc "\\(" itempath "\\)") "")
+	              "\\s+State: COMPLETED\\s+Status: PASS")) 
+        (msg (conc "Expect " testname (if itempath (conc "/" itempath) ""))))
+      ;;(print "testname=" testname ", regex=" rxp ", msg=" msg)
+      (expect:required in "LogFileBody" >= 1 msg (regexp rxp))))
   (list "try_remapped"  "try_remapped"     "try_mapped"  "try_itemmap"  "try_itemmap"             "try_toplevel0"  "try_toplevel")
   (list #f              "1234/xtra\\.\\d"  #f            #f             "testcase\\d/item\\.\\d"  #f               #f)
 )
