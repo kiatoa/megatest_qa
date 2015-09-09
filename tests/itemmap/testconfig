@@ -41,3 +41,10 @@ mode toplevel
 
 
 # test2 : fullprep
+
+[test_meta]
+author tyardeni
+owner  tyardeni
+description Test itemmap substitutions
+tags items
+

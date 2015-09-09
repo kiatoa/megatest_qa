@@ -25,5 +25,5 @@ echo_testcase
 [test_meta]
 author tyardeni
 owner tardeni
-description Testing itemmap waiton
+description Testing remapping of itemmap substitution
 criteria utility
