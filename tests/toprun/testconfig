@@ -3,7 +3,7 @@ rname release_toprun
 rdir  $MTTESTDIR/fullrun
 
 [setup]
-submegatest #{getenv MTTESTDIR}/#{get misc rdir}
+submegatest #{get misc rdir}
 
 [ezsteps]
 cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs -testpatt %     -target ubuntu/nfs/none -runname #{get misc rname} -testpatt %
