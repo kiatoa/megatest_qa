@@ -1,6 +1,7 @@
 # test2 from the tests/Makefile
 [setup]
-submegatest #{getenv MTTESTDIR}/rerunclean
+# submegatest #{getenv MTTESTDIR}/rerunclean
+submegatest #{getenv MT_TEST_RUN_DIR}/rerunclean
 
 [pre-launch-env-vars]
 NUMTESTS 20
@@ -8,8 +9,11 @@ NUMTESTS 20
 [ezsteps]
 
 # Set things up
+copy  rsync -av #{getenv MT_RUN_AREA_HOME}/rerunclean/ ./rerunclean/
 clean $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
-run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_top -target std/0 -runname run1 -run-wait
+# run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_top -target std/0 -runname run1 -run-wait
+# testconfig is missing for try_top, got renamed to try_rerunclean, we'll try that one
+run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_rerunclean -target std/0 -runname run1 -run-wait
 res1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -target std/0
 
 

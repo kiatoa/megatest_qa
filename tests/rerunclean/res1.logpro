@@ -3,6 +3,10 @@
 ;;   License GPL.
 
 
-(expect:required in "LogFileBody" > 0 "Tests run with items"  #/try_item/ )
-(expect:required in "LogFileBody" > 0 "Tests run at toplevel" #/try_toplevel/ )
-(expect:required in "LogFileBody" = 1 "Test run"              #/try_top/ )
+(expect:required in "LogFileBody" >= 1 "Tests run with items"  #/Test: itemwait.*Status:.*WARN/ )
+(expect:required in "LogFileBody" >= 1 "Tests run with items"  #/Test: itemwait.*Status:.*WAIVED/ )
+(expect:required in "LogFileBody" >= 1 "Tests run with items"  #/Test: itemwait.*Status:.*SKIP/ )
+
+(expect:required in "LogFileBody" >= 1 "Tests run at toplevel" #/Test: toplevel_.*Status:.*PASS/ )
+(expect:required in "LogFileBody" = 1 "Test run"              #/Test: try_rerunclean.*Status:.*PASS/ )
+(expect:error    in "LogFileBody" = 0 "No FAIL expected"      #/Test:.*Status:.*FAIL/)
