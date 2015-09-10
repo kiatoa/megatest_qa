@@ -1,12 +1,13 @@
 # test2 from the tests/Makefile
 [setup]
-submegatest #{getenv MTTESTDIR}/fullrun
+submegatest #{getenv MT_TEST_RUN_DIR}/fullrun
 
 [var]
 tname test2
 mtpath #{shell readlink -f ../../bin}
 
 [ezsteps]
+rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
 clean    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -remove-runs -testpatt %                    -target  ubuntu/nfs/none -runname #{get var tname}%
 part1    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run-wait -run         -testpatt ez_pass,runfirst/a/% -reqtarg ubuntu/nfs/none -runname #{get var tname}   -preclean
 # This next one is impossible to satisfy - it should give up after a short while

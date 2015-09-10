@@ -1,6 +1,6 @@
 # test2 from the tests/Makefile
 [setup]
-submegatest #{getenv MTTESTDIR}/itemmap
+submegatest #{getenv MT_TEST_RUN_DIR}/itemmap
 
 [pre-launch-env-vars]
 NUMTESTS 20
@@ -8,6 +8,7 @@ NUMTESTS 20
 [ezsteps]
 
 # Set things up
+rsync rsync -av $MT_RUN_AREA_HOME/itemmap/ ./itemmap/
 clean $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
 run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt % -target std/0 -runname run1 -run-wait
 res1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -target std/0

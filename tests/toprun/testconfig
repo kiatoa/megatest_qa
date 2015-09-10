@@ -1,11 +1,12 @@
 [misc]
 rname release_toprun
-rdir  $MTTESTDIR/fullrun
+rdir  #{getenv MT_TEST_RUN_DIR}/fullrun
 
 [setup]
 submegatest #{get misc rdir}
 
 [ezsteps]
+rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
 cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs -testpatt %     -target ubuntu/nfs/none -runname #{get misc rname} -testpatt %
 runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run -testpatt %             -target ubuntu/nfs/none -runname #{get misc rname} -run-wait
 runtop   $MTRUNNER #{get misc rdir} $MTPATH megatest -runtests all_toplevel       -target ubuntu/nfs/none -runname #{get misc rname} -run-wait

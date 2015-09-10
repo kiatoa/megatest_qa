@@ -1,6 +1,6 @@
 # test2 from the tests/Makefile
 [setup]
-submegatest #{getenv MTTESTDIR}/fdktestqa/testqa 
+submegatest #{getenv MT_TEST_RUN_DIR}/fdktestqa/testqa 
 
 [var]
 tname itemwait
@@ -11,6 +11,7 @@ NUMTESTS 20
 [ezsteps]
 
 # Set things up
+rsync      rsync -av $MT_RUN_AREA_HOME/fdktestqa/ ./fdktestqa/
 clean      $MTRUNNER $MTTESTDIR/fdktestqa/testqa $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname #{get var tname}%
 runbigrun3 $MTRUNNER $MTTESTDIR/fdktestqa/testqa $MTPATH nbfake megatest -run     -testpatt bigrun3 -target a/bigrun3 -runname #{get var tname}
 # watchrun watches until it sees at least one RUNNING in bigrun and one PASS in bigrun2

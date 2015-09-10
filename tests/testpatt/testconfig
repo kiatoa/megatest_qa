@@ -1,7 +1,8 @@
 [setup]
-submegatest #{getenv MTTESTDIR}/fullrun
+submegatest #{getenv MT_TEST_RUN_DIR}/fullrun
 
 [ezsteps]
+rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
 clean    $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -remove-runs -testpatt % -target ubuntu/nfs/none -runname release_testpatt
 cleanres $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
 

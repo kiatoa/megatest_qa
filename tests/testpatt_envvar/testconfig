@@ -1,11 +1,12 @@
 [setup]
-submegatest #{getenv MTTESTDIR}/fullrun
+submegatest #{getenv MT_TEST_RUN_DIR}/fullrun
 
 [var]
 targ -target ubuntu/nfs/all_toplevel
 tp   -testpatt %
 
 [ezsteps]
+rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
 cleantop $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -remove-runs #{get var tp}  #{get var targ} -runname release_toplevel
 runall   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run         #{get var tp}  #{get var targ} -runname release_toplevel -runwait
 results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_toplevel #{get var targ} -runname release_toplevel 

@@ -1,6 +1,6 @@
 # test2 from the tests/Makefile
 [setup]
-submegatest #{getenv MTTESTDIR}/dep-tests
+submegatest #{getenv MT_TEST_RUN_DIR}/dep-tests
 
 [var]
 tname deptest
@@ -8,6 +8,7 @@ tname deptest
 [ezsteps]
 
 # Set things up
+rsync         rsync -av $MT_RUN_AREA_HOME/dep-tests/ ./dep-tests/
 cleansimple   $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -remove-runs -testpatt %             -target simple/0 -runname #{get var tname}
 simple        $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -run         -testpatt test2/%/ptran -target simple/0 -runname #{get var tname} -run-wait
 simpleresults $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -list-runs #{get var tname}           -target simple/0

@@ -1,6 +1,6 @@
 # test2 from the tests/Makefile
 [setup]
-megatestsubarea #{getenv MTTESTDIR}/fullrun
+megatestsubarea #{getenv MT_TEST_RUN_DIR}/fullrun
 
 [var]
 tname rollup
@@ -8,6 +8,7 @@ tname rollup
 [ezsteps]
 
 # Set things up
+rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
 clean    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -remove-runs -testpatt %                    -target  ubuntu/nfs/none -runname #{get var tname}%
 runfirst $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -runtests runfirst/% -reqtarg ubuntu/nfs/none -runname #{get var tname}   -preclean -run-wait
 firstres $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -list-runs #{get var tname}   -target ubuntu/nfs/none
