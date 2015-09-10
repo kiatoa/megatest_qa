@@ -8,6 +8,7 @@ submegatest #{get misc rdir}
 [ezsteps]
 rsync1   rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
 rsync2   rsync -av $MT_RUN_AREA_HOME/simplerun/ ./simplerun/
+rsync3   rsync -av $MT_RUN_AREA_HOME/resources/ ./resources/
 cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs -testpatt %     -target ubuntu/nfs/none -runname #{get misc rname} -testpatt %
 runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run -testpatt %             -target ubuntu/nfs/none -runname #{get misc rname} -run-wait
 runtop   $MTRUNNER #{get misc rdir} $MTPATH megatest -runtests all_toplevel       -target ubuntu/nfs/none -runname #{get misc rname} -run-wait
