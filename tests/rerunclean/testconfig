@@ -31,5 +31,9 @@ priority 0
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
 
+[test_meta]
+author tyardeni
+owner  tyardeni
+description Test preclean/rerun behavior
+tags rerunclean
 
-# test2 : fullprep

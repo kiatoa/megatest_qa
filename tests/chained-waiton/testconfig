@@ -5,6 +5,9 @@ submegatest #{getenv MT_TEST_RUN_DIR}/chained-waiton
 [pre-launch-env-vars]
 NUMTESTS 20
 
+[patt]
+item_list  test4/item.1,test4a/item.1,test4/item.3,test4a/item.3,test4/item.5,test4a/item.5,test4/item.7,test4a/item.7
+
 [ezsteps]
 
 # Set things up
@@ -14,7 +17,8 @@ full_seq4      $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpat
 full_seq4_res  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs full_seq4 -target std/0
 item_seq4      $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt seq4/item.1 -target std/0 -runname item_seq4 -run-wait
 item_seq4_res  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs item_seq4 -target std/0
-
+item_list      $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt #{get patt item_list} -target std/0 -runname item_seq4 -run-wait
+item_list_res  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs item_seq4 -target std/0
 
 [logpro]
 clean ;;
@@ -24,10 +28,14 @@ full_seq4 ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
 item_seq4 ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+item_list ;;
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+
 
 [requirements]
 # waiton testpatt
 priority 0
+runtimlim 15m
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
