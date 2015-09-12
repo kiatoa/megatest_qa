@@ -14,7 +14,8 @@ mode itemwait
 #
 # Replace foo/ with bar/
 # itemmap foo/ bar/
-# 
+#
+#       curr prev
 itemmap blah bork
 
 # Iteration for your tests are controlled by the items section
