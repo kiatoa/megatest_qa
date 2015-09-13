@@ -1,0 +1,23 @@
+[ezsteps]
+step1 echo INFO: $MT_TEST_NAME $MT_ITEMPATH $TESTCASE
+
+[itemstable]
+VAR1    1   2   1    2
+VAR2   aa  aa  bb   bb
+
+[requirements]
+waiton A B
+
+[itemmap]
+A (\d+)/aa aa/\1
+B (\d+)/bb bb/\1
+
+[logpro]
+step1
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+
+[test_meta]
+author matt
+owner matt
+description Testing simple itemmap substitution
+criteria utility
