@@ -17,3 +17,5 @@ simpleresults $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -list-runs #{get v
 waiton rollup
 mode toplevel
 priority 8
+runtimelim 15m
+

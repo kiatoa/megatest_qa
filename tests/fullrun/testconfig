@@ -22,6 +22,7 @@ runall ;;
 [requirements]
 waiton toprun
 priority 10
+runtimelim 15m
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
