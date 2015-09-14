@@ -6,7 +6,7 @@ VAR1    1   2   1    2
 VAR2   aa  aa  bb   bb
 
 [requirements]
-waiton A B
+waitor A B
 
 [itemmap]
 A (\d+)/aa aa/\1

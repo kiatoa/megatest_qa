@@ -9,7 +9,9 @@ VAR2  res res
 
 [requirements]
 waiton C
-itemmap (\d+)/res \1/bb
+
+[itemmap]
+C (\d+)/res \1/bb
 
 [logpro]
 step1
