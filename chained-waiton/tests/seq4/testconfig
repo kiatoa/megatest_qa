@@ -6,6 +6,9 @@ runtest echo INFO: $MT_TEST_NAME $MT_ITEMPATH
 waiton test4 test4a
 mode itemwait
 
+[itemmap]
+test4  (.*) \1
+test4a (.*) \1
 
 [items]
 TESTCASE #{getenv TESTCASES}
