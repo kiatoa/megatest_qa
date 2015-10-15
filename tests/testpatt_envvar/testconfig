@@ -14,6 +14,7 @@ results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_toplev
 [requirements]
 # waiton itemwait
 priority 0
+# runtimelim 15m
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
