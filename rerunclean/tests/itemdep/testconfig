@@ -1,25 +1,20 @@
 [ezsteps]
-echo_testcase echo INFO: $MT_TEST_NAME $MT_ITEMPATH $TESTCASE
+runtest   echo INFO: $MT_TEST_NAME $MT_ITEMPATH
 
 
 [requirements]
-waiton try_toplevel try_mapped
+waiton itemwait
 mode itemwait
 
 
-[itemmap]
-try_toplevel .* %
-try_mapped ([^/]+)/.* X#{getenv WAITON_SUBST}/%/\1
-  X(\d+) \1
-
-
 [items]
-TESTCASE  #{getenv TESTCASES}
-TESTITEM  #{getenv TESTITEMS}
+TEST_LVL0   level0 
+TEST_LVL1   level1 
+TEST_STATUS #{getenv STATUS_LIST}
 
 
 [logpro]
-echo_testcase
+runtest
   (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
 
 

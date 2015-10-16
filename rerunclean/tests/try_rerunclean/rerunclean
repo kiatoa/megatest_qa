@@ -6,4 +6,4 @@
 ################################################################################
 
 echo INFO: Rerunning ${STATUS_FAIL// /,} tests
-$MT_MEGATEST -run -target $MT_TARGET -runname $MT_RUNNAME -preclean -rerun ${STATUS_FAIL// /,}
+$MT_MEGATEST -rerun-clean -target $MT_TARGET -runname $MT_RUNNAME -testpatt %

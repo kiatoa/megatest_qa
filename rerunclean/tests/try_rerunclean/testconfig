@@ -1,11 +1,12 @@
 [ezsteps]
 run_tests echo INFO: $MT_TEST_NAME 
 mrk_tests set-state-status
+sleep_15 sleep 15
 rrn_tests rerunclean
 
 
 [requirements]
-waiton itemwait toplevel_ABORT toplevel_CHECK toplevel_FAIL toplevel_INCOMPLETE toplevel_PASS 
+waiton itemwait toplevel_ABORT toplevel_CHECK toplevel_FAIL toplevel_INCOMPLETE toplevel_UNKNOWN toplevel_PASS 
 mode toplevel
 
 

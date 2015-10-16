@@ -11,6 +11,7 @@ while read t test rest; do
   STATE=COMPLETED
 
   testpatt=$(echo $test | sed -e 's#(#/#g' -e 's#)##g')
+  echo INFO: Updating $test $testpatt
 
   if [[ $testpatt == toplevel* ]]; then 
     STATUS=${testpatt/toplevel_/}
@@ -18,11 +19,13 @@ while read t test rest; do
     STATUS=$(basename $testpatt)
   fi
 
-  [[ $STATUS == $testpatt ]]   && continue
-  [[ $STATUS == INCOMPLETE ]]  && STATE=INCOMPLETE
+  case $STATUS in
+	$testpatt)          continue ;; # Do not reset passing statuses
+    INCOMPLETE|UNKNOWN) STATE=$STATUS ;;
+    NOT_STARTED)        STATE=NOT_STARTED; STATUS=n/a ;;
+  esac
 
-
-  echo INFO: Set state/status to $STATE/$STATUS for $testpatt
+  echo INFO: Set state/status to $STATE,$STATUS for $testpatt
   $MT_MEGATEST -set-state-status $STATE,$STATUS -runname $MT_RUNNAME -testpatt $testpatt
 
 done < <($MT_MEGATEST -list-runs $MT_RUNNAME | grep Test:)
