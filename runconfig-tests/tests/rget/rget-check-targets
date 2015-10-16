@@ -16,6 +16,10 @@ while read line; do
   fi
 done < <(megatest -list-targets)
 
+cstatus=$PIPESTATUS
+[[ $cstatus -gt 0 ]] && \
+  echo "ERROR: COMMAND EXIT STATUS $cstatus"
+
 
 if [[ $found -eq $targets ]]; then
   echo "INFO: Found $targets targets ($found == $targets)"

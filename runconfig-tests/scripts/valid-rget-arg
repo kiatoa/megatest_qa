@@ -1,0 +1,13 @@
+#!/bin/bash
+MY_ARG=$1
+
+if [[ -z "$MY_ARG" ]]; then
+  echo "ERROR: $(basename $0) MISSING ARGUMENT"
+  exit 1
+elif [[ $MY_ARG == "#f" || $MY_ARG == "#F" ]]; then
+  echo "ERROR: $(basename $0) RECEIVED #f"
+  exit 1
+else
+  echo "INFO: ARG OK"
+fi
+
