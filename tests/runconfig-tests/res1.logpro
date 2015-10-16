@@ -1,0 +1,7 @@
+;; (c) 2006,2007,2008,2009 Matthew Welland matt@kiatoa.com
+;;  
+;;   License GPL.
+
+(expect:check in "LogFileBody" = 0 "Failing test(s)"              #/Test:.*Status: FAIL/ )
+(expect:error in "LogFileBody" = 0 "Steps exiting in error state" #/Step:.*State: end.*Status: 1 / )
+(expect:error in "LogFileBody" = 0 "Steps exiting in check state" #/Step:.*State: end.*Status: 3 / )
