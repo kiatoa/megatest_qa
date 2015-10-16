@@ -1,0 +1,35 @@
+[ezsteps]
+runtest  echo INFO: $MT_TEST_NAME $MT_ITEMPATH
+rgettest rget-check-runconfig
+tgttest  rget-check-targets
+
+
+
+[requirements]
+mode toplevel
+
+
+[items]
+# No items
+
+
+[logpro]
+runtest
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+rgettest
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+  (expect:error    in "LogFileBody" = 0 "Error message"         #/^ERROR/ )
+tgttest
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+  (expect:required in "LogFileBody" > 0 "Targets found"         #/^TARGET/ )
+  (expect:error    in "LogFileBody" = 0 "Error message"         #/^ERROR/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Toplevel test to validate waiton chaining
+criteria utility

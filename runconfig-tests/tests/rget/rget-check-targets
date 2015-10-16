@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "INFO: Validating -list-targets output with rget in runconfigs"
+pushd $MT_RUN_AREA_HOME
+echo
+
+echo megatest -list-targets
+let targets=0
+while read line; do
+  if [[ $line == Found* ]]; then
+	  echo "$line"
+	  found=$(echo $line | sed -e 's/.*\([0-9]\+\).*/\1/')
+  else
+    echo TARGET $line	
+    let "targets += 1"
+  fi
+done < <(megatest -list-targets)
+
+
+if [[ $found -eq $targets ]]; then
+  echo "INFO: Found $targets targets ($found == $targets)"
+else
+  echo "ERROR: Target count mismatch ($found != $targets)"
+fi
+
+popd

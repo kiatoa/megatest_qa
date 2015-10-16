@@ -1,0 +1,45 @@
+#!/bin/bash
+
+cat <<__HEAD
+INFO: TEST_VAL=$TEST_VAL
+INFO: DEFAULT_VAL=$DEFAULT_VAL
+
+__HEAD
+
+echo "INFO: Checking runconfig values set via rget"  
+
+[[ -n "$RGET_VAL" ]] && \
+  echo "INFO: RGET_VAL=$RGET_VAL" || \
+  echo "ERROR: RGET_VAL not set"
+
+[[ $RGET_VAL == $TEST_VAL ]] && \
+  echo "INFO: RGET_VAL($RGET_VAL) == TEST_VAL($TEST_VAL)" || \
+  echo "ERROR: RGET_VAL($RGET_VAL) != TEST_VAL($TEST_VAL)"
+
+[[ $RGET_ECHO_TGT == *"$TEST_VAL" ]] && \
+  echo "INFO: RGET_ECHO_TGT ends with $TEST_VAL => $RGET_ECHO_TGT" || \
+  echo "ERROR: RGET_ECHO_TGT does not end with $TEST_VAL => $RGET_ECHO_TGT"
+
+[[ $RGET_DEF == $DEFAULT_VAL ]] && \
+  echo "INFO: RGET_DEF($RGET_DEF) == DEFAULT_VAL($DEFAULT_VAL)" || \
+  echo "ERROR: RGET_DEF($RGET_DEF) != DEFAULT_VAL($DEFAULT_VAL)"
+
+[[ $RGET_ECHO_DEF == *"$DEFAULT_VAL" ]] && \
+  echo "INFO: RGET_ECHO_DEF ends with $DEFAULT_VAL => $RGET_ECHO_DEF" || \
+  echo "ERROR: RGET_ECHO does not end with $DEFAULT_VAL => $RGET_ECHO_DEF"
+
+[[ -n "$RGET_SHELL_ECHO" ]] || echo ERROR: RGET_SHELL_ECHO not set
+
+[[ "$RGET_SHELL_SET" == "$RGET_SHELL_ECHO" ]] && \
+  echo "INFO: RGET_SHELL_SET($RGET_SHELL_SET) == RGET_SHELL_ECHO($RGET_SHELL_ECHO)" || \
+  echo "ERROR: RGET_SHELL_SET($RGET_SHELL_SET) != RGET_SHELL_ECHO($RGET_SHELL_ECHO)" 
+
+echo
+echo "INFO: Run Config for $DEPS/$SPEED"
+echo megatest -show-runconfig -target $DEPS/$SPEED
+megatest -show-runconfig -target $DEPS/$SPEED
+
+echo
+echo "INFO: Run Configs (all):"
+echo env -u DEPS -u SPEED megatest -show-runconfig
+env -u DEPS -u SPEED megatest -show-runconfig
