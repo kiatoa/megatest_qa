@@ -1,0 +1,42 @@
+# test2 from the tests/Makefile
+[mytest]
+testname listruns-tests
+
+
+[setup]
+submegatest #{getenv MT_TEST_RUN_DIR}/#{get mytest testname}
+
+[pre-launch-env-vars]
+NUMTESTS 20
+
+[ezsteps]
+
+# Set things up
+copy      rsync -av #{getenv MT_RUN_AREA_HOME}/#{get mytest testname}/ ./#{get mytest testname}/
+clean     $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
+run-ex    $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt example  -target std/0 -runname run1 -run-wait
+run-filt  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt filter  -target std/0 -runname run1 -run-wait
+chk-filt  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -target std/0
+
+
+[logpro]
+clean ;;
+  (expect:ignore in "LogFileBody" >= 0 "Ignore NFS releated issues" #/ERROR: There was a problem removing/)
+  (expect:error  in "LogFileBody"  = 0 "No errors allowed" #/error/i)
+chk-filt ;;
+  (expect:error in "LogFileBody" = 0 "Filter test failure" #/Test: filter.*State: COMPLETED.*Status: (FAIL|ABORT|CHECK)/ )
+
+
+[requirements]
+# waiton testpatt
+priority 0
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+mode toplevel
+
+[test_meta]
+author tyardeni
+owner  tyardeni
+description Test preclean/rerun behavior
+tags rerunclean
+

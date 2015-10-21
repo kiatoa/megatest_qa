@@ -1,0 +1,28 @@
+[ezsteps]
+runtest  echo $STATUS: $MT_TEST_NAME $MT_ITEMPATH
+
+
+[requirements]
+mode toplevel
+
+
+[items]
+STATUS PASS WARN CHECK FAIL ABORT
+
+
+[logpro]
+runtest
+  (expect:check   in "LogFileBody" = 0 "CHECK Status" #/^CHECK/ )
+  ;(expect:abort   in "LogFileBody" = 0 "ABORT Status" #/^ABORT/ )
+  (expect:error   in "LogFileBody" = 0 "FAIL Status"  #/^FAIL/ )
+  (expect:warning in "LogFileBody" = 0 "WARN Status"  #/^WARN/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Toplevel test to validate list-runs output
+criteria utility

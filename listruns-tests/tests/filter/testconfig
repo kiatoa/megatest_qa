@@ -1,0 +1,35 @@
+[ezsteps]
+runtest  echo INFO: $MT_TEST_NAME $MT_ITEMPATH
+listfail list-runs $STATE_COMPLETED $STATUS_FAIL
+listpass list-runs $STATE_COMPLETED $STATUS_PASS
+
+
+
+[requirements]
+mode toplevel
+
+
+[items]
+# No items
+
+
+[logpro]
+runtest ;;
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+listfail ;;
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+  (expect:error    in "LogFileBody" = 0 "Error message"         #/^ERROR/ )
+  (expect:error    in "LogFileBody" = 0 "Passing tests in list-runs output" #/Test:.*State: COMPLETED.*Status: (PASS|WARN|WAIV)/ )
+listpass ;;
+  (expect:error    in "LogFileBody" = 0 "Failing tests in list-runs output" #/Test:.*State: COMPLETED.*Status: (FAIL|ABORT|CHECK)/ )
+
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Toplevel test to validate waiton chaining
+criteria utility
