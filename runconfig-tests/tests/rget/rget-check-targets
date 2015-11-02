@@ -4,21 +4,34 @@ echo "INFO: Validating -list-targets output with rget in runconfigs"
 pushd $MT_RUN_AREA_HOME
 echo
 
-echo megatest -list-targets
+echo "INFO: Unsetting \$MT_TARGET"
+unset MT_TARGET
+echo
+
+echo INFO: megatest -list-targets
+let cstatus=0
 let targets=0
 while read line; do
-  if [[ $line == Found* ]]; then
+
+  case $line in
+
+    *"ERROR:"*)
+	  echo $line >&2
+	  ;;
+
+    Found*)
 	  echo "$line"
 	  found=$(echo $line | sed -e 's/.*\([0-9]\+\).*/\1/')
-  else
-    echo TARGET $line	
-    let "targets += 1"
-  fi
-done < <(megatest -list-targets)
+      ;;
 
-cstatus=$PIPESTATUS
-[[ $cstatus -gt 0 ]] && \
-  echo "ERROR: COMMAND EXIT STATUS $cstatus"
+    */*|default)
+      echo TARGET $line	
+      let "targets += 1"
+      ;;
+
+  esac
+done < <(megatest -list-targets 2>&1  || echo "ERROR: COMMAND EXIT STATUS $?")
+
 
 
 if [[ $found -eq $targets ]]; then

@@ -14,15 +14,16 @@ mode toplevel
 
 
 [logpro]
-runtest
-  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
-rgettest
-  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
-  (expect:error    in "LogFileBody" = 0 "Error message"         #/^ERROR/ )
-tgttest
-  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+runtest ;;
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO:/ )
+rgettest ;;
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO:/ )
+  (expect:error    in "LogFileBody" = 0 "Error message"         #/^ERROR:/ )
+tgttest ;;
+  (expect:error    in "LogFileBody" = 0 "Invalid exit code"     #/^ERROR: COMMAND EXIT STATUS/ )
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO:/ )
   (expect:required in "LogFileBody" > 0 "Targets found"         #/^TARGET/ )
-  (expect:error    in "LogFileBody" = 0 "Error message"         #/^ERROR/ )
+  (expect:warning  in "LogFileBody" = 0 "Error message"         #/^ERROR: / )
 
 
 [pre-launch-env-overrides]
