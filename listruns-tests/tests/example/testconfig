@@ -11,9 +11,9 @@ STATUS PASS WARN CHECK FAIL ABORT
 
 
 [logpro]
-runtest
+runtest ;;
   (expect:check   in "LogFileBody" = 0 "CHECK Status" #/^CHECK/ )
-  ;(expect:abort   in "LogFileBody" = 0 "ABORT Status" #/^ABORT/ )
+  (expect:abort   in "LogFileBody" = 0 "ABORT Status" #/^ABORT/ )
   (expect:error   in "LogFileBody" = 0 "FAIL Status"  #/^FAIL/ )
   (expect:warning in "LogFileBody" = 0 "WARN Status"  #/^WARN/ )
 
