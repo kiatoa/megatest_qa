@@ -11,3 +11,7 @@ dashboard :
 
 runs :
 	mkdir -p runs
+
+lntc : 
+	mkdir lntc
+	for x in $(shell ls tests);do ln -s $(PWD)/tests/$$x/testconfig $(PWD)/lntc/$$x;done

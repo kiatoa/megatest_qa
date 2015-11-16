@@ -1,15 +1,21 @@
+[misc]
+rname testpatt_envvar
+rdir  #{getenv MT_TEST_RUN_DIR}/fullrun
+
 [setup]
-submegatest #{getenv MT_TEST_RUN_DIR}/fullrun
+submegatest #{get misc rdir}
 
 [var]
 targ -target ubuntu/nfs/all_toplevel
 tp   -testpatt %
 
 [ezsteps]
-rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
-cleantop $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -remove-runs #{get var tp}  #{get var targ} -runname release_toplevel
-runall   $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run         #{get var tp}  #{get var targ} -runname release_toplevel -run-wait
-results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_toplevel #{get var targ} -runname release_toplevel 
+rsync1    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
+rsync2    rsync -av $MT_RUN_AREA_HOME/resources/ ./resources/
+rsync3    rsync -av $MT_RUN_AREA_HOME/simplerun/ ./simplerun/
+cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs #{get var tp}  #{get var targ} -runname #{get misc rname}
+runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run         #{get var tp}  #{get var targ} -runname #{get misc rname} -run-wait
+results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname} #{get var targ} -runname #{get misc rname} 
 
 [requirements]
 # waiton itemwait
