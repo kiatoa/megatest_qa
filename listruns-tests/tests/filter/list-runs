@@ -3,6 +3,8 @@
 STATE=$1
 STATUS=$2
 
+echo "debug> DAVE was here"
+
 declare -a lr_filt=(\
   megatest -list-runs $MT_RUNNAME -target $DEPS/$SPEED -state $STATE -status $STATUS)
 
@@ -20,8 +22,10 @@ let match=0
 while read line; do
   let "tests += 1"
 
-  grepstate=${STATE/,/|}
-  grepstatus=${STATUS/,/|}
+  # Added second slash so these substitute ALL commas to pipes - DJL 1/13/16
+  grepstate=${STATE//,/|}
+  grepstatus=${STATUS//,/|}
+
   grepped=$(echo $line | egrep "State: ($grepstate).*Status: ($grepstatus)")
 
   if [[ -n "$grepped" ]]; then
