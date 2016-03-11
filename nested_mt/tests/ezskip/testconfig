@@ -1,0 +1,15 @@
+[ezsteps]
+skipme  echo SKIPME
+
+[logpro]
+skipme ;;
+  (expect:skip in "LogFileBody" = 0 "SKIPPING" #/SKIPME/)
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+
+[requirements]
+# waiton toprun
+priority 10
+runtimelim 15m
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+mode toplevel

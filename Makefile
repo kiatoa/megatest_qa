@@ -1,4 +1,4 @@
-RUNTESTS ?= runconfig-tests testpatt rollup rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton
+RUNTESTS ?= runconfig-tests testpatt rollup rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton nested_mt
 all : 
 	for testname in $(RUNTESTS); do \
             megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $$testname ; \

@@ -1,0 +1,30 @@
+[misc]
+rname nested_mt
+rdir  #{getenv MT_TEST_RUN_DIR}/nested_mt
+
+[setup]
+submegatest #{get misc rdir}
+
+[ezsteps]
+rsync1    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
+cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs -target tryit -runname #{get misc rname} -testpatt %
+runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run -testpatt % -target tryit -runname #{get misc rname} -run-wait
+
+[logpro]
+cleantop ;;
+  (expect:warning in "LogFileBody" = 0 "Warn if can't remove files" #/ERROR: There was a problem removing/)
+  (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
+runall ;;
+  (expect:ignore    in "LogFileBody" >= 0 "Ignore issues due to NFS" #/ERROR: There was a problem removing/)
+  (expect:required  in "LogFileBody" > 0 "need to see at least one unrecognised waiton" #/ERROR: test special has unrecognised waiton testname/)
+  (expect:required  in "LogFileBody" > 0 "need to see at least one dynamic_waiton"      #/ERROR: test dynamic_waiton has listed itself as a waiton/)
+  (expect:required  in "LogFileBody" > 0 "expecting to see some Failed launch"          #/ERROR: Failed to launch test blocktestxz/)
+  (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
+
+[requirements]
+# waiton toprun
+priority 10
+runtimelim 15m
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+mode toplevel
