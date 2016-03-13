@@ -1,5 +1,6 @@
 [ezsteps]
 skipme  echo SKIPME
+notrun  exit 1
 
 [logpro]
 skipme ;;
