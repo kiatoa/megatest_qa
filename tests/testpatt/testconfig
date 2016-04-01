@@ -3,11 +3,11 @@ submegatest #{getenv MT_TEST_RUN_DIR}/fullrun
 
 [ezsteps]
 rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
-clean    $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -remove-runs -testpatt % -target ubuntu/nfs/none -runname release_testpatt
-cleanres $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
+clean    $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -remove-runs -testpatt % -target ubuntu/nfs/none -runname release_testpatt
+cleanres $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
 
-runitems $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -run -testpatt runfirst/%2 -target ubuntu/nfs/none -runname release_testpatt
-results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
+runitems $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -run -testpatt runfirst/%2 -target ubuntu/nfs/none -runname release_testpatt
+results  $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
 
 [requirements]
 # waiton dependencies
