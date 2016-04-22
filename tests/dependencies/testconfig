@@ -14,7 +14,8 @@ simple        $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -run         -test
 simpleresults $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -list-runs #{get var tname}           -target simple/0
 
 [requirements]
-waiton rollup
+# -mrw- no need for this test to waiton anything.
+# waiton rollup
 mode toplevel
 priority 8
 runtimelim 15m

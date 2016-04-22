@@ -26,7 +26,8 @@ runall ;;
   (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 [requirements]
-waiton toprun
+# mrw: No need that I can think of for this to wait on anything
+# waiton toprun
 priority 10
 runtimelim 15m
 
