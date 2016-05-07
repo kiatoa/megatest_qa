@@ -9,7 +9,7 @@ NUMTESTS 20
 [ezsteps]
 
 # Set things up
-copy  rsync -av #{getenv MT_RUN_AREA_HOME}/rerunclean/ ./rerunclean/
+copy  rsync -av --exclude '*.db' #{getenv MT_RUN_AREA_HOME}/rerunclean/ ./rerunclean/
 clean $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
 # run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt try_top -target std/0 -runname run1 -run-wait
 # testconfig is missing for try_top, got renamed to try_rerunclean, we'll try that one

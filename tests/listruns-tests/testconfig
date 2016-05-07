@@ -12,7 +12,7 @@ NUMTESTS 20
 [ezsteps]
 
 # Set things up
-copy      rsync -av #{getenv MT_RUN_AREA_HOME}/#{get mytest testname}/ ./#{get mytest testname}/
+copy      rsync -av --exclude '*.db' #{getenv MT_RUN_AREA_HOME}/#{get mytest testname}/ ./#{get mytest testname}/
 clean     $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
 run-ex    $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt example  -target std/0 -runname run1 -run-wait
 run-filt  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt filter  -target std/0 -runname run1 -run-wait

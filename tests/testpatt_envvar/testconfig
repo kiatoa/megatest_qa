@@ -10,9 +10,9 @@ targ -target ubuntu/nfs/all_toplevel
 tp   -testpatt %
 
 [ezsteps]
-rsync1    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
-rsync2    rsync -av $MT_RUN_AREA_HOME/resources/ ./resources/
-rsync3    rsync -av $MT_RUN_AREA_HOME/simplerun/ ./simplerun/
+rsync1    rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
+rsync2    rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/resources/ ./resources/
+rsync3    rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/simplerun/ ./simplerun/
 cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs #{get var tp}  #{get var targ} -runname #{get misc rname}
 runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run         #{get var tp}  #{get var targ} -runname #{get misc rname} -run-wait
 results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname} #{get var targ} -runname #{get misc rname} 

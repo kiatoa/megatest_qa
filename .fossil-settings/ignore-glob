@@ -12,15 +12,6 @@ fdktestqa/simpleruns/*
 fdktestqa/testqa/logs/*.log
 fdktestqa/testqa/megatest.db
 fdktestqa/testqa/server-kills.log
-fullrun/configs/*localconfig
-fullrun/db/*
-fullrun/envfile.txt
-fullrun/foo
-fullrun/logs/*
-fullrun/megatest.db
-fullrun/results.log
-fullrun/server-kills.log
-fullrun/tmp/*
 itemmap/links/*
 itemmap/logs/*.log
 itemmap/megatest.db

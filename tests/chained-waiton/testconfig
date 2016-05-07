@@ -11,7 +11,7 @@ item_list  test4/item.1,test4a/item.1,test4/item.3,test4a/item.3,test4/item.5,te
 [ezsteps]
 
 # Set things up
-rsync          rsync -av $MT_RUN_AREA_HOME/chained-waiton/ ./chained-waiton/
+rsync          rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/chained-waiton/ ./chained-waiton/
 clean          $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
 full_seq4      $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt seq4 -target std/0 -runname full_seq4 -run-wait
 full_seq4_res  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs full_seq4 -target std/0

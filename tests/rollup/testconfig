@@ -8,18 +8,18 @@ tname rollup
 [ezsteps]
 
 # Set things up
-rsync    rsync -av $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
-clean    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -remove-runs -testpatt %                    -target  ubuntu/nfs/none -runname #{get var tname}%
-runfirst $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -runtests runfirst/% -reqtarg ubuntu/nfs/none -runname #{get var tname}   -preclean -run-wait
-firstres $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -list-runs #{get var tname}   -target ubuntu/nfs/none
+rsync    rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
+clean    $MTRUNNER $MT_TEST_RUN_DIR/fullrun  $MTPATH megatest -remove-runs -testpatt %                    -target  ubuntu/nfs/none -runname #{get var tname}%
+runfirst $MTRUNNER $MT_TEST_RUN_DIR/fullrun  $MTPATH megatest -runtests runfirst/% -reqtarg ubuntu/nfs/none -runname #{get var tname}   -preclean -run-wait
+firstres $MTRUNNER $MT_TEST_RUN_DIR/fullrun  $MTPATH megatest -list-runs #{get var tname}   -target ubuntu/nfs/none
 
 # Set one test item to INCOMPLETE
-setstate $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -set-state-status INCOMPLETE,FAIL :state COMPLETED :status PASS -testpatt runfirst/b/2 -target ubuntu/nfs/none -runname #{get var tname}
+setstate $MTRUNNER $MT_TEST_RUN_DIR/fullrun  $MTPATH megatest -set-state-status INCOMPLETE,FAIL :state COMPLETED :status PASS -testpatt runfirst/b/2 -target ubuntu/nfs/none -runname #{get var tname}
 
 # Rerun a different test item
-rerun    $MTRUNNER $MTTESTDIR/fullrun  $MTPATH megatest -run         -testpatt  runfirst/spring     -reqtarg ubuntu/nfs/none -runname #{get var tname} -preclean -rerun PASS -run-wait
+rerun    $MTRUNNER $MT_TEST_RUN_DIR/fullrun  $MTPATH megatest -run         -testpatt  runfirst/spring     -reqtarg ubuntu/nfs/none -runname #{get var tname} -preclean -rerun PASS -run-wait
 
-results  $MTRUNNER $MTTESTDIR/fullrun $MTPATH megatest -list-runs #{get var tname} -target ubuntu/nfs/none
+results  $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs #{get var tname} -target ubuntu/nfs/none
 
 [logpro]
 runfirst ;;

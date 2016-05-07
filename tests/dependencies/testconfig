@@ -8,10 +8,10 @@ tname deptest
 [ezsteps]
 
 # Set things up
-rsync         rsync -av $MT_RUN_AREA_HOME/dep-tests/ ./dep-tests/
-cleansimple   $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -remove-runs -testpatt %             -target simple/0 -runname #{get var tname}
-simple        $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -run         -testpatt test2/%/ptran -target simple/0 -runname #{get var tname} -run-wait
-simpleresults $MTRUNNER $MTTESTDIR/dep-tests $MTPATH megatest -list-runs #{get var tname}           -target simple/0
+rsync         rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/dep-tests/ ./dep-tests/
+cleansimple   $MTRUNNER $MT_TEST_RUN_DIR/dep-tests $MTPATH megatest -remove-runs -testpatt %             -target simple/0 -runname #{get var tname}
+simple        $MTRUNNER $MT_TEST_RUN_DIR/dep-tests $MTPATH megatest -run         -testpatt test2/%/ptran -target simple/0 -runname #{get var tname} -run-wait
+simpleresults $MTRUNNER $MT_TEST_RUN_DIR/dep-tests $MTPATH megatest -list-runs #{get var tname}           -target simple/0
 
 [requirements]
 # -mrw- no need for this test to waiton anything.

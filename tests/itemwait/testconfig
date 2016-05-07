@@ -11,9 +11,9 @@ NUMTESTS 20
 [ezsteps]
 
 # Set things up
-rsync      rsync -av $MT_RUN_AREA_HOME/fdktestqa/ ./fdktestqa/
-clean      $MTRUNNER $MTTESTDIR/fdktestqa/testqa $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname #{get var tname}%
-runbigrun3 $MTRUNNER $MTTESTDIR/fdktestqa/testqa $MTPATH nbfake megatest -run     -testpatt bigrun3 -target a/bigrun3 -runname #{get var tname}
+rsync      rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/fdktestqa/ ./fdktestqa/
+clean      $MTRUNNER $MT_TEST_RUN_DIR/fdktestqa/testqa $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname #{get var tname}%
+runbigrun3 $MTRUNNER $MT_TEST_RUN_DIR/fdktestqa/testqa $MTPATH nbfake megatest -run     -testpatt bigrun3 -target a/bigrun3 -runname #{get var tname}
 # watchrun watches until it sees at least one RUNNING in bigrun and one PASS in bigrun2
 watchrun   sleep 15;watchrun.sh #{get var tname}
 

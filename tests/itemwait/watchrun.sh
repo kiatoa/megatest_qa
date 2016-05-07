@@ -6,7 +6,7 @@ pass=no
 alldone=no
 while [[ $alldone == no ]];do
     sleep 5
-    $MTRUNNER $MTTESTDIR/fdktestqa/testqa $MTPATH megatest -list-runs $runname > list-runs.log
+    $MTRUNNER $MT_TEST_RUN_DIR/fdktestqa/testqa $MTPATH megatest -list-runs $runname > list-runs.log
     bigrun_running=$(cat list-runs.log | egrep 'bigrun\(.*RUNNING'|wc -l)
     bigrun2_pass=$(cat list-runs.log   | egrep 'bigrun2.*COMPLETED.*PASS'|wc -l)
     echo "bigrun_running=$bigrun_running, bigrun2_pass=$bigrun2_pass"

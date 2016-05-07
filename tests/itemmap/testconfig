@@ -8,7 +8,7 @@ NUMTESTS 20
 [ezsteps]
 
 # Set things up
-rsync rsync -av $MT_RUN_AREA_HOME/itemmap/ ./itemmap/
+rsync rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/itemmap/ ./itemmap/
 clean $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
 run1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt % -target std/0 -runname run1 -run-wait
 res1  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -target std/0
