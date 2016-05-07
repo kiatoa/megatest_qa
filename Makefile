@@ -1,5 +1,5 @@
 RUNTESTS ?= runconfig-tests testpatt rollup rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton nested_mt
-RUNNAME ?= $(shell date +ww%U.%u)
+RUNNAME ?= $(shell date +ww%U.%u-%H)
 TARGET ?= 1.61/01
 
 all : 
