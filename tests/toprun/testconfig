@@ -17,7 +17,7 @@ results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname
 [requirements]
 # waiton testpatt_envvar
 priority 10
-# runtimelim 15m
+runtimelim 25m
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
