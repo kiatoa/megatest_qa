@@ -25,7 +25,9 @@ results_b $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs #{get v
 
 [logpro]
 clean (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
-part1 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
+part1 ;;
+   (expect:ignore in "LogFileBody" >= 0 "Ignore word \"error\" in test meta loading message" #/^Updating .*error/)
+   (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
 part2 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
 part3 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
 part4 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
