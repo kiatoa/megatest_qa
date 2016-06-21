@@ -2,7 +2,7 @@ RUNTESTS ?= runconfig-tests testpatt rollup rerunclean listruns-tests itemwait d
 # NOT READY:  nested_mt
 ITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
-TARGET ?= 1.61/01
+TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell fossil info|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
 
 all : 
 	for testname in $(RUNTESTS); do \
@@ -17,7 +17,10 @@ dashboard : runs logs
 runs :
 	mkdir -p runs
 
-logs/$(RUNNAME) : 
+logs :
+	mkdir -p logs
+
+logs/$(RUNNAME) : logs
 	mkdir -p logs/$(RUNNAME)
 
 lntc : 
