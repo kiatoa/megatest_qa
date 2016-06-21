@@ -30,11 +30,16 @@ lntc :
 # Use this target for -j
 
 logs/$(RUNNAME)/%.log : logs/$(RUNNAME) tests/%/testconfig
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(*F) > logs/$(RUNNAME)/$(*F).log 2>&1
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(*F) -log logs/$(RUNNAME)/$(*F).log
+
+#	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(*F) > logs/$(RUNNAME)/$(*F).log 2>&1
 
 LOGS=$(addprefix logs/$(RUNNAME)/,$(addsuffix .log,$(RUNTESTS)))
 
 parallel : logs $(LOGS)
+
+onerun : logs
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait 
 
 clean :
 	rm logs/*
