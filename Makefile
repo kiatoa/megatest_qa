@@ -39,7 +39,7 @@ LOGS=$(addprefix logs/$(RUNNAME)/,$(addsuffix .log,$(RUNTESTS)))
 parallel : logs $(LOGS)
 
 onerun : logs
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait 
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait -rerun-all
 
 clean :
 	rm logs/*
