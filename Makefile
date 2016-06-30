@@ -4,10 +4,11 @@ ITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
 TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
 
-all : 
-	for testname in $(RUNTESTS); do \
-            megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $$testname ; \
-	done
+all :  onerun
+
+# 	for testname in $(RUNTESTS); do \
+#             megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $$testname ; \
+# 	done
 
 # -run-wait; \
 
