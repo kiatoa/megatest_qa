@@ -6,9 +6,10 @@ TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell (cd 
 
 all :  onerun
 
-# 	for testname in $(RUNTESTS); do \
-#             megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $$testname ; \
-# 	done
+slowsafe :
+	for testname in $(RUNTESTS); do \
+           megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname ; \
+ 	done
 
 # -run-wait; \
 
