@@ -1,0 +1,27 @@
+[ezsteps]
+clean_env /usr/bin/env -i #{getenv VARS_MINIMAL} megatest -list-runs %
+
+
+[requirements]
+mode toplevel
+
+
+[items]
+# No items here
+
+
+[logpro]
+clean_env ;;
+  (expect:error    in "LogFileBody" = 0 "iup Error" #/Error: \(iup\) failed to initialize library \(error\)/ )
+  (expect:error    in "LogFileBody" = 0 "Error messages" #/^Error:/ )
+  (expect:required in "LogFileBody" > 0 "Runs Info"      #/^Run:/ )
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Validate environment variable requirements
+criteria utility
