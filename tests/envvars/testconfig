@@ -1,0 +1,28 @@
+[misc]
+rname release_envvars
+rdir  #{getenv MT_TEST_RUN_DIR}/envvars
+
+[setup]
+submegatest #{get misc rdir}
+
+[ezsteps]
+rsync    rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/envvars/ ./envvars/
+cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs -testpatt % -target std/0 -runname #{get misc rname} 
+runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run -testpatt % -target std/0 -runname #{get misc rname} -run-wait
+results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname} -target std/0 
+
+[logpro]
+runall ;;
+   (expect:required in "LogFileBody" > 0 "Informational messages" #/^INFO/ )
+   (expect:warning  in "LogFileBody" = 0 "Subtests failing" #/COMPLETED.*(FAIL|CHECK|ABORT)/ )
+results ;;
+   (expect:error    in "LogFileBody" = 0 "No FAIL expected"      #/Test:.*Status:.*FAIL/)
+   (expect:required in "LogFileBody" = 0 "Some PASS expected"    #/Test:.*Status:.*PASS/)
+ 
+
+[requirements]
+# waiton testpatt_envvar
+priority 10
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+mode toplevel

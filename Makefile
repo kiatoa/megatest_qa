@@ -1,4 +1,4 @@
-RUNTESTS ?= runconfig-tests testpatt rollup rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton
+RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton
 # NOT READY:  nested_mt
 ITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
