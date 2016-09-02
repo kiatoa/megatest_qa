@@ -17,7 +17,7 @@ runall ;;
    (expect:warning  in "LogFileBody" = 0 "Subtests failing" #/COMPLETED.*(FAIL|CHECK|ABORT)/ )
 results ;;
    (expect:error    in "LogFileBody" = 0 "No FAIL expected"      #/Test:.*Status:.*FAIL/)
-   (expect:required in "LogFileBody" = 0 "Some PASS expected"    #/Test:.*Status:.*PASS/)
+   (expect:required in "LogFileBody" > 0 "Some PASS expected"    #/Test:.*Status:.*PASS/)
  
 
 [requirements]
