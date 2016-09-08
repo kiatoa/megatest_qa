@@ -6,7 +6,7 @@ TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell (cd 
 
 all :  onerun
 
-slowsafe :
+slowsafe : runs
 	for testname in $(RUNTESTS); do \
            megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname ; \
  	done
@@ -40,7 +40,7 @@ LOGS=$(addprefix logs/$(RUNNAME)/,$(addsuffix .log,$(RUNTESTS)))
 
 parallel : logs $(LOGS)
 
-onerun : logs
+onerun : logs runs
 	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait -rerun-all
 
 clean :
