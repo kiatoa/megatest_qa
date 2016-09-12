@@ -30,7 +30,7 @@ runall ;;
 # mrw: No need that I can think of for this to wait on anything
 # waiton toprun
 priority 10
-runtimelim 15m
+runtimelim 20m
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 mode toplevel
