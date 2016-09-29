@@ -1,0 +1,33 @@
+[setup]
+submegatest #{getenv MT_TEST_RUN_DIR}/simplerun
+
+[ezsteps]
+# set up an example area to use to test read_only activities
+rsync        rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/simplerun/ ./simplerun/
+setupdirs    rm -rf simpleruns simplelinks ; mkdir -p simpleruns simplelinks
+runsimplerun $MTRUNNER $MT_TEST_RUN_DIR/simplerun $MTPATH megatest -run-wait -run -testpatt % -target ubuntu/none -runname read_only
+results      $MTRUNNER $MT_TEST_RUN_DIR/simplerun $MTPATH megatest -list-runs read_only -target ubuntu/none
+mkreadonly   chmod -v -R a-w simplerun simpleruns simplelinks
+listruns     $MTRUNNER $MT_TEST_RUN_DIR/simplerun $MTPATH megatest -list-runs % -target %/%
+
+[logpro]
+
+rsync ;; check rsync step
+   (expect:required in "LogFileBody" > 0 "Expect some noise from rsync" #/.*/)
+
+runitems ;; check runitems
+   (expect:required in "LogFileBody" > 0 "Expect some noise from runitems" #/.*/)
+
+results ;; check results
+   (expect:required in "LogFileBody" > 0 "Expect some tests to have run" #/.*/)
+
+mkreadonly ;; check mkreadonly
+   (expect:required in "LogFileBody" > 0 "Expect some noise from chmod" #/.*/)
+
+listruns ;; verify that listruns ran in a read-only area
+   (expect:error in "LogFileBody" = 0 "No stack dumps allowed" #/Call history/)
+   (expect:error in "LogFileBody" = 0 "No ERR allowed"         #/err/i)
+   (expect:error in "LogFileBody" = 0 "No WARN allowed"        #/warn/i)
+   (expect:required in "LogFileBody" > 0 "Expect some noise"   #/.*/)
+
+[requirements]
