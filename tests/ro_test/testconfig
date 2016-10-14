@@ -31,3 +31,7 @@ listruns ;; verify that listruns ran in a read-only area
    (expect:required in "LogFileBody" > 0 "Expect some noise"   #/.*/)
 
 [requirements]
+
+[pre-launch-env-overrides]
+NBFAKE_HOST plxcas130
+

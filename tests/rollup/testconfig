@@ -32,7 +32,7 @@ rerun    ;;
 
 [requirements]
 # waiton  #{getenv ALL_TOPLEVEL_TESTS}
-priority 10
+priority 1
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 # mode toplevel
