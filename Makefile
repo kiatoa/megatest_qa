@@ -8,7 +8,7 @@ all :  onerun
 
 slowsafe : runs
 	for testname in $(RUNTESTS); do \
-           megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname ; \
+           megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname -generate-html ; \
  	done
 
 # -run-wait; \
@@ -41,7 +41,7 @@ LOGS=$(addprefix logs/$(RUNNAME)/,$(addsuffix .log,$(RUNTESTS)))
 parallel : logs $(LOGS)
 
 onerun : logs runs
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait -rerun-all
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
 
 clean :
 	rm logs/*
