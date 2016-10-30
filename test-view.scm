@@ -18,7 +18,7 @@
                                            (fg (conc
                                                 "rgb:"
                                                 (common:iup-color->rgb-hex
-                                                 (iup:attribute obj "BGCOLOR")))))
+                                                 (iup:attribute obj "FGCOLOR")))))
                                        (system (conc term-cmd
                                                      " -bg " bg
                                                      " -fg " fg
