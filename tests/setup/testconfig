@@ -2,6 +2,8 @@
 [ezsteps]
 extract-branches create-branches-file.sh
 
+[include #{get var mtrah}/std-items.config]
+
 # Test requirements are specified here
 [requirements]
 # waiton 

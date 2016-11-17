@@ -26,6 +26,8 @@ runall ;;
   (expect:required  in "LogFileBody" > 0 "expecting to see some Failed launch"          #/ERROR: Failed to launch test blocktestxz/)
   (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
+[include #{get var mtrah}/std-items.config]
+
 [requirements]
 # mrw: No need that I can think of for this to wait on anything
 # waiton toprun

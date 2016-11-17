@@ -20,6 +20,8 @@ results ;;
    (expect:required in "LogFileBody" > 0 "Some PASS expected"    #/Test:.*Status:.*PASS/)
  
 
+[include #{get var mtrah}/std-items.config]
+
 [requirements]
 # waiton testpatt_envvar
 priority 1

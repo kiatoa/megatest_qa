@@ -30,6 +30,8 @@ rerun    ;;
   (expect:ignore in "LogFileBody" >= 0 "NFS causes rm to fail sometimes" #/ERROR: There was a problem removing/)
   (expect:error in "LogFileBody" = 0 "NoErrors" #/error/i)
 
+[include #{get var mtrah}/std-items.config]
+
 [requirements]
 # waiton  #{getenv ALL_TOPLEVEL_TESTS}
 priority 1

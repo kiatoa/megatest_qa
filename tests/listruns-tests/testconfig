@@ -26,6 +26,7 @@ clean ;;
 chk-filt ;;
   (expect:error in "LogFileBody" = 0 "Filter test failure" #/Test: filter.*State: COMPLETED.*Status: (FAIL|ABORT|CHECK)/ )
 
+[include #{get var mtrah}/std-items.config]
 
 [requirements]
 # waiton testpatt

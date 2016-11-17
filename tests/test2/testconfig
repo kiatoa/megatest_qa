@@ -34,6 +34,8 @@ part4 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
 part5 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
 part6 (expect:error in "LogFileBody" = 0 "No errors" #/error/i)
 
+[include #{get var mtrah}/std-items.config]
+
 [requirements]
 # waiton  fullrun
 runtimlim 20m

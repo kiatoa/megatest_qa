@@ -21,6 +21,8 @@ clean ;;
 run1 ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
+[include #{get var mtrah}/std-items.config]
+
 [requirements]
 # waiton testpatt
 priority 0

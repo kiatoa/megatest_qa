@@ -13,10 +13,10 @@ buildmt     (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megate
 waiton setup
 priority 0
 
-# Iteration for your test is controlled by the items section
-[items]
-CHICKEN_VERSION #{getenv CHICKEN_VERSIONS}
-BRANCH_TO_TEST  [system cat #{get var th}/setup/branches.txt]
+[include #{get var mtrah}/std-items.config]
+# reset the mode
+[requirements]
+mode normal
 
 # Alternatively you could use a [itemstable] section
 # [itemstable]

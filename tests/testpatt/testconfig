@@ -9,6 +9,8 @@ cleanres $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs release_
 runitems $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -run -testpatt runfirst/%2 -target ubuntu/nfs/none -runname release_testpatt
 results  $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
 
+[include #{get var mtrah}/std-items.config]
+
 [requirements]
 # waiton dependencies
 priority 0

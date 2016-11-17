@@ -26,6 +26,8 @@ watchrun ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
   (expect:error in "LogFileBody" = 0 "FAIL is fail" #/FAIL/)
 
+[include #{get var mtrah}/std-items.config]
+
 [requirements]
 # waiton testpatt
 priority 0
