@@ -14,7 +14,7 @@ slowsafe : runs
 # -run-wait; \
 
 dashboard : runs logs
-	dashboard -rows 24 &
+	dashboard -rows 10 &
 
 runs :
 	mkdir -p runs
@@ -41,6 +41,7 @@ LOGS=$(addprefix logs/$(RUNNAME)/,$(addsuffix .log,$(RUNTESTS)))
 parallel : logs $(LOGS)
 
 onerun : logs runs
+	viewscreen "tail -F logs/$(RUNNAME).log"
 	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
 
 clean :

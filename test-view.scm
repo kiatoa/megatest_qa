@@ -5,6 +5,16 @@
 (use iup)
 (import (prefix iup iup:))
 
+;; ADD SUPPORT FOR hs!
+
+(define (common:iup-color->rgb-hex instr)
+ (string-intersperse 
+  (map (lambda (x)
+         (number->string x 16))
+       (map string->number
+            (string-split instr)))
+  "/"))
+
 (define (test-view-gen commondat tabs tab-num view-name view-cfgdat mtconfig-dat)
  (let* ((term-cmd      "xterm") ;; (common:which (list "gnome-terminal" "konsole" "xterm")))
         (color-browser (iup:color-browser))
