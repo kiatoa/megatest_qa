@@ -4,9 +4,9 @@ th #{getenv MT_LINKTREE}/#{getenv MT_TARGET}/#{getenv MT_RUNNAME}
 
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
-open     mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested
-cobranch cd megatest;fossil co $BRANCH_TO_TEST
-build    cd megatest;make -j && make install
+openfossil  (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested)
+mergebranch (cd megatest;fossil up trunk;fossil merge $BRANCH_TO_TEST)
+buildmt     (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megatest;make -j && make install)
 
 # Test requirements are specified here
 [requirements]
@@ -27,8 +27,8 @@ BRANCH_TO_TEST  [system cat #{get var th}/setup/branches.txt]
 #
 
 [pre-launch-env-vars]
-# Modify path to find chicken
-PATH $CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH
+# Modify path to find chicken - doesn't work, fix it?
+# PATH $CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH
 
 
 # Logpro rules for each step can be captured here in the testconfig
@@ -36,7 +36,7 @@ PATH $CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH
 #
 [logpro]
 
-open ;; rules for checking output from running step (open mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested) with command mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested
+openfossil ;; rules for checking output from running step (open mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested) with command mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested
   ;; You should have at least one expect:required. This ensures that your process ran
   ;; comment out the line below and replace "put pattern here" with a pattern that will
   ;; always be seen in your log file if the step runs successfully.
@@ -49,7 +49,7 @@ open ;; rules for checking output from running step (open mkdir -p megatest;cd m
   (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
   (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
 
-build ;; rules for checking output from running step (build cd megatest;make -j && make install) with command cd megatest;make -j && make install
+buildmt ;; rules for checking output from running step (build cd megatest;make -j && make install) with command cd megatest;make -j && make install
   ;; You should have at least one expect:required. This ensures that your process ran
   ;; comment out the line below and replace "put pattern here" with a pattern that will
   ;; always be seen in your log file if the step runs successfully.
@@ -62,7 +62,7 @@ build ;; rules for checking output from running step (build cd megatest;make -j 
   (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
   (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
 
-cobranch ;; rules for checking output from running step (cobranch cd megatest;fossil co $BRANCH_TO_TEST) with command cd megatest;fossil co $BRANCH_TO_TEST
+mergebranch ;; rules for checking output from running step (cobranch cd megatest;fossil co $BRANCH_TO_TEST) with command cd megatest;fossil co $BRANCH_TO_TEST
   ;; You should have at least one expect:required. This ensures that your process ran
   ;; comment out the line below and replace "put pattern here" with a pattern that will
   ;; always be seen in your log file if the step runs successfully.
