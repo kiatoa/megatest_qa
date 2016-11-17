@@ -2,19 +2,23 @@ RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests it
 # NOT READY:  nested_mt
 ITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
-TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
+BRANCH  =  $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')
+ITER = w$(shell date +%U.%u)-$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
+TARGET ?= $(BRANCH)/$(ITER)
+NORMTESTPATT = toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
+EXTENDEDPATT = $(NORMTESTPATT),test2,ro_test,itemmap,chained-waiton
 
 all :  onerun
 
 slowsafe : runs
 	for testname in $(RUNTESTS); do \
            megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname -generate-html ; \
- 	done
+	done
 
 # -run-wait; \
 
 dashboard : runs logs
-	dashboard -rows 10 &
+	dashboard -rows 20 &
 
 runs :
 	mkdir -p runs
@@ -42,7 +46,7 @@ parallel : logs $(LOGS)
 
 onerun : logs runs
 	viewscreen "tail -F logs/$(RUNNAME).log"
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(EXTENDEDPATT) -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
 
 clean :
 	rm logs/*

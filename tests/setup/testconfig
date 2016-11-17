@@ -1,0 +1,45 @@
+# Add additional steps here. Format is "stepname script"
+[ezsteps]
+extract-branches create-branches-file.sh
+
+# Test requirements are specified here
+[requirements]
+# waiton 
+priority 0
+
+# Iteration for your test is controlled by the items section
+# [items]
+
+# Alternatively you could use a [itemstable] section
+# [itemstable]
+# ITEMVAR1  a    b    c
+# ITEMVAR2  d    e    f
+#
+# would result in items: a/d  b/e   c/f
+#
+
+# Logpro rules for each step can be captured here in the testconfig
+# note: The ;; after the stepname and the leading whitespace are required
+#
+[logpro]
+
+extract-branches ;; rules for checking output from running step (extract-branches create-branches-file.sh) with command create-branches-file.sh
+  ;; You should have at least one expect:required. This ensures that your process ran
+  ;; comment out the line below and replace "put pattern here" with a pattern that will
+  ;; always be seen in your log file if the step runs successfully.
+  ;;
+  ;; (expect:required in "LogFileBody" > 0 "Put description here" #/put pattern here/)
+  ;;
+  ;; You may need ignores to suppress false error or warning hits from the later expects
+  ;; NOTE: Order is important here!
+  (expect:ignore   in "LogFileBody"  < 99 "Ignore the word error in comments" #/^\/\/.*error/)
+  (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
+  (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
+
+# test_meta is a section for storing additional data on your test
+[test_meta]
+author matt
+owner  matt
+description Create the files needed for a full, automated run.
+tags tagone,tagtwo
+reviewed never
