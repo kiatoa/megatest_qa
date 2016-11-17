@@ -14,7 +14,7 @@ slowsafe : runs
 # -run-wait; \
 
 dashboard : runs logs
-	dashboard -rows 24 &
+	dashboard -rows 10 &
 
 runs :
 	mkdir -p runs
