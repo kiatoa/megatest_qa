@@ -5,6 +5,7 @@
 (use iup)
 (import (prefix iup iup:))
 
+;; ADD SUPPORT FOR hs!
 
 (define (common:iup-color->rgb-hex instr)
  (string-intersperse 
