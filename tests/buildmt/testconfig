@@ -4,18 +4,17 @@ th #{getenv MT_LINKTREE}/#{getenv MT_TARGET}/#{getenv MT_RUNNAME}
 
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
-openfossil  (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested)
-mergebranch (cd megatest;fossil up trunk;fossil merge $BRANCH_TO_TEST)
+openfossil  (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested;fossil co trunk)
+drymerge    (cd megatest;fossil merge $release -n)
+mergebranch (cd megatest;fossil merge $release)
 buildmt     (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megatest;make -j && make install)
 
-# Test requirements are specified here
-[requirements]
-waiton setup
-priority 0
+[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
 
-[include #{get var mtrah}/std-items.config]
-# reset the mode
+# reset the mode and waiton
 [requirements]
+waiton
+priority 0
 mode normal
 
 # Alternatively you could use a [itemstable] section
@@ -35,6 +34,9 @@ mode normal
 # note: The ;; after the stepname and the leading whitespace are required
 #
 [logpro]
+
+drymerge ;; test that there are no conflicts
+  (expect:error in "LogFileBody" = 0 "merge conflicts" #/merge conflicts/)
 
 openfossil ;; rules for checking output from running step (open mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested) with command mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested
   ;; You should have at least one expect:required. This ensures that your process ran
@@ -62,7 +64,7 @@ buildmt ;; rules for checking output from running step (build cd megatest;make -
   (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
   (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
 
-mergebranch ;; rules for checking output from running step (cobranch cd megatest;fossil co $BRANCH_TO_TEST) with command cd megatest;fossil co $BRANCH_TO_TEST
+mergebranch ;; rules for checking output from running step (cobranch cd megatest;fossil co $release) with command cd megatest;fossil co $release
   ;; You should have at least one expect:required. This ensures that your process ran
   ;; comment out the line below and replace "put pattern here" with a pattern that will
   ;; always be seen in your log file if the step runs successfully.

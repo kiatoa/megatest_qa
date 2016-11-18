@@ -1,29 +1,18 @@
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
-extract-branches create-branches-file.sh
+commitmerge cd $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/megatest;fossil commit -m "Committing automation merge of $branch into trunk"
 
-# Test requirements are specified here
+# Test requirements are specified here, we depend on all tests being PASS. Then we can do the commit.
 [requirements]
-# waiton 
+waiton [system echo $STDTESTS|tr ',' ' ']
 priority 0
-
-# Iteration for your test is controlled by the items section
-# [items]
-
-# Alternatively you could use a [itemstable] section
-# [itemstable]
-# ITEMVAR1  a    b    c
-# ITEMVAR2  d    e    f
-#
-# would result in items: a/d  b/e   c/f
-#
 
 # Logpro rules for each step can be captured here in the testconfig
 # note: The ;; after the stepname and the leading whitespace are required
 #
 [logpro]
 
-extract-branches ;; rules for checking output from running step (extract-branches create-branches-file.sh) with command create-branches-file.sh
+commitmerge ;; rules for checking output from running step (commitmerge cd megatest;fossil commit -m "Committing automation merge of $branch into trunk") with command cd megatest;fossil commit -m "Committing automation merge of $branch into trunk"
   ;; You should have at least one expect:required. This ensures that your process ran
   ;; comment out the line below and replace "put pattern here" with a pattern that will
   ;; always be seen in your log file if the step runs successfully.
@@ -40,6 +29,6 @@ extract-branches ;; rules for checking output from running step (extract-branche
 [test_meta]
 author matt
 owner  matt
-description Create the files needed for a full, automated run.
+description If all prior tests pass commit the merge.
 tags tagone,tagtwo
 reviewed never

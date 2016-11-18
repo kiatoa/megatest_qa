@@ -15,7 +15,8 @@ slowsafe : runs
            megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname -generate-html ; \
 	done
 
-# -run-wait; \
+runinteg :
+	flock run-one.lock ./scripts/run-one-branch.sh --nonblock --verbose
 
 dashboard : runs logs
 	dashboard -rows 20 &

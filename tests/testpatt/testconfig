@@ -9,11 +9,11 @@ cleanres $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs release_
 runitems $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -run -testpatt runfirst/%2 -target ubuntu/nfs/none -runname release_testpatt
 results  $MTRUNNER $MT_TEST_RUN_DIR/fullrun $MTPATH megatest -list-runs release_testpatt -target ubuntu/nfs/none
 
-[include #{get var mtrah}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
 
 [requirements]
 # waiton dependencies
 priority 0
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-mode toplevel
+# mode toplevel
