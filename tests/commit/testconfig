@@ -1,6 +1,6 @@
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
-commitmerge cd $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/megatest;fossil commit -m "Committing automation merge of $branch into trunk"
+commitmerge cd $(echo $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/*/*/megatest|cut -f1 -d' ');fossil commit -m "Committing automation merge of $branch into trunk"
 
 # Test requirements are specified here, we depend on all tests being PASS. Then we can do the commit.
 [requirements]
