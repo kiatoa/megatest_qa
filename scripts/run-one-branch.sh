@@ -6,7 +6,8 @@
 MEGATEST_FOSSIL_FILE=$HOME/fossils/megatest.fossil
 RUNNAME=$(date +ww%U.%u)
 STDTESTS=toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
-if [[ $(lsb_release -si) == "Ubuntu" ];then
+
+if [[ "$(lsb_release -si)" == "Ubuntu" ]];then
     INTEG_BRANCH=integ-home
 else
     INTEG_BRANCH=integ-office
