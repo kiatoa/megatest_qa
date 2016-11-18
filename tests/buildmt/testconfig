@@ -4,7 +4,7 @@ th #{getenv MT_LINKTREE}/#{getenv MT_TARGET}/#{getenv MT_RUNNAME}
 
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
-openfossil  (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested;fossil co trunk)
+openfossil  (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested;fossil co $INTEG_BRANCH)
 drymerge    (cd megatest;fossil merge $release -n)
 mergebranch (cd megatest;fossil merge $release)
 buildmt     (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megatest;make -j && make install)

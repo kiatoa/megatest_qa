@@ -3,16 +3,21 @@
 # We receive the megatest fossil location via $MEGATEST_FOSSIL_FILE
 # Create candidates
 
-MEGATEST_FOSSIL_FILE=~/fossils/megatest.fossil
+MEGATEST_FOSSIL_FILE=$HOME/fossils/megatest.fossil
 RUNNAME=$(date +ww%U.%u)
 STDTESTS=toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
+if [[ $(lsb_release -si) == "Ubuntu" ];then
+    INTEG_BRANCH=integ-home
+else
+    INTEG_BRANCH=integ-office
+fi
 
 function process_one_branch () {
     rm -f branches.txt skip_branches.txt all-branches-nodes.txt
 
-    # first create list of open branches, ignore anything with "trunk" in the name.
+    # first create list of open branches, ignore anything with "$INTEG_BRANCH" in the name.
     #
-    fossil branch list -a -R $MEGATEST_FOSSIL_FILE | tr '*' ' ' |awk '{print $1}'|grep -v trunk > all-branches.txt
+    fossil branch list -a -R $MEGATEST_FOSSIL_FILE | tr '*' ' ' |awk '{print $1}'|grep -v "$INTEG_BRANCH" > all-branches.txt
 
     # get the wiki list of nodes
     #
