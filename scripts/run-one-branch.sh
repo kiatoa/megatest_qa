@@ -3,14 +3,16 @@
 # We receive the megatest fossil location via $MEGATEST_FOSSIL_FILE
 # Create candidates
 
-MEGATEST_FOSSIL_FILE=$HOME/fossils/megatest.fossil
 RUNNAME=$(date +ww%U.%u)
-STDTESTS=toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
+
+# Make these available to tests (i.e. export them).
+export MEGATEST_FOSSIL_FILE=$HOME/fossils/megatest.fossil
+export STDTESTS=toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun,commit
 
 if [[ "$(lsb_release -si)" == "Ubuntu" ]];then
-    INTEG_BRANCH=integ-home
+    export INTEG_BRANCH=integ-home
 else
-    INTEG_BRANCH=integ-office
+    export INTEG_BRANCH=integ-office
 fi
 
 function process_one_branch () {
@@ -41,6 +43,10 @@ function process_one_branch () {
 	    echo "$branch" >> branches.txt
 	    echo "$node $branch" >> tested_nodes
 	    (cd ..;megatest -run -target $branch/$node -runname $RUNNAME -testpatt $STDTESTS -run-wait)
+	    # clean up.
+	    killall mtest dboard -v
+	    sleep 10
+	    killall mtest dboard -v -9
 	    break
 	fi
     done

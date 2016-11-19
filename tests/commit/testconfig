@@ -1,7 +1,7 @@
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
 # go to first
-commitmerge cd $(echo $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/*/*/megatest|cut -f1 -d' ');fossil commit -m "Committing automation merge of $branch into trunk"
+commitmerge cd $(echo $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/*/*/megatest|cut -f1 -d' ');fossil commit -m "Committing automated merge of $MT_TARGET into $INTEG_BRANCH"
 
 # Test requirements are specified here, we depend on all tests being PASS. Then we can do the commit.
 [requirements]
@@ -13,7 +13,7 @@ priority 0
 #
 [logpro]
 
-commitmerge ;; rules for checking output from running step (commitmerge cd megatest;fossil commit -m "Committing automation merge of $branch into trunk") with command cd megatest;fossil commit -m "Committing automation merge of $branch into trunk"
+commitmerge ;; rules for checking output from running step commitmerge
   ;; You should have at least one expect:required. This ensures that your process ran
   ;; comment out the line below and replace "put pattern here" with a pattern that will
   ;; always be seen in your log file if the step runs successfully.

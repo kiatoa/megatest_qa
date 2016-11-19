@@ -4,10 +4,12 @@ th #{getenv MT_LINKTREE}/#{getenv MT_TARGET}/#{getenv MT_RUNNAME}
 
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
-openfossil  (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested;fossil co $INTEG_BRANCH)
-drymerge    (cd megatest;fossil merge $release -n)
-mergebranch (cd megatest;fossil merge $release)
-buildmt     (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megatest;make -j && make install)
+openfossil   (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested;fossil co $INTEG_BRANCH)
+# verifymtpath should point to a NON EXISTANT area right now and dirname MTPATH should exist!
+verifymtpath (if [[ -e $MTPATH/megatest ]];then echo NOVAR;fi;if [[ -e $(dirname $MTPATH) ]];then echo OK;else echo NOVAR;fi)
+drymerge     (cd megatest;fossil merge $release -n)
+mergebranch  (cd megatest;fossil merge $release)
+buildmt      (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megatest;make -j && make install)
 
 [include #{getenv MT_RUN_AREA_HOME}/std-items.config]
 
@@ -16,14 +18,6 @@ buildmt     (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megate
 waiton
 priority 0
 mode normal
-
-# Alternatively you could use a [itemstable] section
-# [itemstable]
-# ITEMVAR1  a    b    c
-# ITEMVAR2  d    e    f
-#
-# would result in items: a/d  b/e   c/f
-#
 
 [pre-launch-env-vars]
 # Modify path to find chicken - doesn't work, fix it?
@@ -34,6 +28,9 @@ mode normal
 # note: The ;; after the stepname and the leading whitespace are required
 #
 [logpro]
+
+verifymtpath ;; verify that mtpath is set apropriately
+  (expect:error in "LogFileBody" = 0 "mtpath not set" #/NOVAR/)
 
 drymerge ;; test that there are no conflicts
   (expect:error in "LogFileBody" = 0 "merge conflicts" #/merge conflicts/)
