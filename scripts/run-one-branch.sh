@@ -18,12 +18,17 @@ function process_one_branch () {
 
     # first create list of open branches, ignore anything with "$INTEG_BRANCH" in the name.
     #
+    echo "Getting list of branch candidates"
+    fossil sync -R $MEGATEST_FOSSIL_FILE
     fossil branch list -a -R $MEGATEST_FOSSIL_FILE | tr '*' ' ' |awk '{print $1}'|grep -v "$INTEG_BRANCH" > all-branches.txt
+    echo "Done getting branch candidates list"
 
     # get the wiki list of nodes
     #
+    echo "Getting list of already tested nodes"
     fossil wiki export tested_nodes -R $MEGATEST_FOSSIL_FILE > tested_nodes
     cp tested_nodes tested_nodes.orig
+    echo "Done getting list of already tested nodes"
 
     # for each branch get the last node
     for branch in $(cat all-branches.txt);do
@@ -32,9 +37,10 @@ function process_one_branch () {
 	if grep $node tested_nodes > /dev/null;then
 	    echo "$branch $node" >> skip_branches.txt
 	else
+	    echo "Processing branch $branch"
 	    echo "$branch" >> branches.txt
 	    echo "$node $branch" >> tested_nodes
-	    echo "Would run: (cd ..;megatest -run -target $branch/$node -runname $RUNNAME -testpatt $STDTESTS -runwait)"
+	    (cd ..;megatest -run -target $branch/$node -runname $RUNNAME -testpatt $STDTESTS -run-wait)
 	    break
 	fi
     done
@@ -43,7 +49,7 @@ function process_one_branch () {
 	echo "Nothing was run"
     else
 	echo "Committing changed tested_nodes file"
-	# fossil wiki commit tested_nodes tested_nodes -R $MEGATEST_FOSSIL_FILE
+	fossil wiki commit tested_nodes tested_nodes -R $MEGATEST_FOSSIL_FILE
     fi
 }
 
