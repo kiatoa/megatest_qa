@@ -7,7 +7,7 @@ RUNNAME=$(date +ww%U.%u)
 
 # Make these available to tests (i.e. export them).
 export MEGATEST_FOSSIL_FILE=$HOME/fossils/megatest.fossil
-export STDTESTS=toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun,commit
+export STDTESTS=toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
 
 if [[ "$(lsb_release -si)" == "Ubuntu" ]];then
     export INTEG_BRANCH=integ-home
@@ -42,7 +42,7 @@ function process_one_branch () {
 	    echo "Processing branch $branch"
 	    echo "$branch" >> branches.txt
 	    echo "$node $branch" >> tested_nodes
-	    (cd ..;megatest -run -target $branch/$node -runname $RUNNAME -testpatt $STDTESTS -run-wait)
+	    (cd ..;megatest -run -target $branch/$node -runname $RUNNAME -testpatt commit -run-wait)
 	    # clean up.
 	    killall mtest dboard -v
 	    sleep 10
