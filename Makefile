@@ -1,4 +1,6 @@
 RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton
+GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun 
+
 # NOT READY:  nested_mt
 ITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
@@ -14,7 +16,7 @@ slowsafe : runs
 # -run-wait; \
 
 dashboard : runs logs
-	dashboard -rows 10 &
+	dashboard -rows 20 &
 
 runs :
 	mkdir -p runs
@@ -42,7 +44,7 @@ parallel : logs $(LOGS)
 
 onerun : logs runs
 	viewscreen "tail -F logs/$(RUNNAME).log"
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt % -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(GOODTESTS) -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
 
 clean :
 	rm logs/*
