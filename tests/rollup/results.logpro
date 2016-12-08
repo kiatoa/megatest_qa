@@ -2,7 +2,7 @@
 ;;  
 ;;   License GPL.
 
-(define logbody "LogFileBody")
+;; (define logbody "LogFileBody")
 
 (for-each 
   (lambda (testname itempath)
@@ -14,5 +14,4 @@
   (list "winter"   "summer"   "spring"   "fall"     "a/1"))
 
 (expect:required in "LogFileBody" = 1 "Set b/2 to NOT_STARTED INCOMPLETE" #/Test:\s+runfirst\(b\/2\)\s+State:\s+NOT_STARTED\s+Status:\s+INCOMPLETE/)
-(expect:required in "LogFileBody" = 1 "Result is UNKNOWN/FAIL" #/Test:\s+runfirst\s+State:\s+UNKNOWN\s+Status:\s+FAIL/)
-
+(expect:required in "LogFileBody" = 1 "Result is COMPLETED/CHECK" #/Test:\s+runfirst\s+State:\s+COMPLETED\s+Status:\s+CHECK/)
