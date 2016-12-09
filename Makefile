@@ -6,12 +6,32 @@ ITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
 TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
 
+TEMPLATES=chained-waiton dep-tests dynamic-waiton-example envvars fslsync fullrun installall itemmap itemmap2 listruns-tests mintest nested_mt rerunclean runconfig-tests simplerun speedtest
+
+HOMEHOST_FILES=$(foreach dir,$(TEMPLATES),$(dir)/.homehost)
+
+
+
+
 all :  onerun
+
+set-homehosts: $(HOMEHOST_FILES)
+	@echo homehostfiles are setup
+
+del-homehosts:
+	rm -f .homehost $(HOMEHOST_FILES)
+
+.homehost:
+	host `hostname` | sed 's/^.* has address //' > .homehost
+
+%/.homehost : .homehost
+	cp .homehost $@
+
 
 slowsafe : runs
 	for testname in $(RUNTESTS); do \
            megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname -generate-html ; \
- 	done
+	done
 
 # -run-wait; \
 
