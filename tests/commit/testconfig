@@ -1,7 +1,7 @@
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
 # go to first
-commitmerge cd $(echo $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/*/*/megatest|cut -f1 -d' ');fossil commit -m "Committing automated merge of $MT_TARGET into $INTEG_BRANCH"
+commitmerge cd $(echo $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/*/megatest|cut -f1 -d' ');fossil commit -m "Committing automated merge of $MT_TARGET into $INTEG_BRANCH"
 
 # Test requirements are specified here, we depend on all tests being PASS. Then we can do the commit.
 [requirements]
