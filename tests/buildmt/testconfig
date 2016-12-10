@@ -11,7 +11,7 @@ openfossil   (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --
 verifymtpath (if [[ -e $MTPATH/megatest ]];then echo NOVAR;fi;if [[ -e $(dirname $MTPATH) ]];then echo OK;else echo NOVAR;fi)
 drymerge     (cd megatest;fossil merge $release -n)
 mergebranch  (cd megatest;fossil merge $release)
-buildmt      (export PATH=$CHICKEN_PATH_BASE/$CHICKEN_VERSION/bin:$PATH;cd megatest;make -j && make install)
+buildmt      (export PATH="${CHICKEN_PATH_BASE}/${CHICKEN_VERSION}/bin:${PATH}";cd megatest;make -j && make install)
 
 # reset the mode and waiton
 [requirements]
@@ -21,7 +21,7 @@ mode normal
 
 [pre-launch-env-vars]
 # Modify path to find chicken - doesn't work, fix it?
-PATH #{getenv CHICKEN_PATH_BASE}/{getenv CHICKEN_VERSION}/bin:#{getenv PATH}
+# PATH #{getenv CHICKEN_PATH_BASE}/\$CHICKEN_VERSION/bin:$PATH
 LD_LIBRARY_PATH #{getenv CHICKEN_PATH_BASE}/#{getenv CHICKEN_VERSION}/lib
 
 # Logpro rules for each step can be captured here in the testconfig
