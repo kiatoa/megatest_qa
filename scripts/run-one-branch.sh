@@ -55,7 +55,7 @@ function process_one_branch () {
 	echo "Nothing was run"
     else
 	echo "Committing changed tested_nodes file"
-	fossil wiki commit tested_nodes tested_nodes -R $MEGATEST_FOSSIL_FILE
+#	fossil wiki commit tested_nodes tested_nodes -R $MEGATEST_FOSSIL_FILE
     fi
 }
 

@@ -16,7 +16,7 @@ slowsafe : runs
 	done
 
 runinteg :
-	flock run-one.lock ./scripts/run-one-branch.sh --nonblock --verbose
+	flock --nonblock --verbose run-one.lock ./scripts/run-one-branch.sh
 
 dashboard : runs logs
 	dashboard -rows 20 &
