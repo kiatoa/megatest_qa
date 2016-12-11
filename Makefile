@@ -2,27 +2,26 @@ RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests it
 GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test 
 
 # NOT READY:  nested_mt
-ITER ?= a
+ITER    ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
-TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
+BRANCH  =  $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')
+ITER    = w$(shell date +%U.%u)-$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
+TS_MODE ?= dev
+TARGET  ?= $(BRANCH)/$(ITER)/$(TS_MODE)
+NORMTESTPATT = toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
+EXTENDEDPATT = $(NORMTESTPATT),test2,ro_test,itemmap,chained-waiton
 
 TEMPLATES=chained-waiton dep-tests dynamic-waiton-example envvars fslsync fullrun installall itemmap itemmap2 listruns-tests mintest nested_mt rerunclean runconfig-tests simplerun speedtest
 
-
-
-
-
-
 all :  onerun
-
-
 
 slowsafe : runs
 	for testname in $(RUNTESTS); do \
            megatest -run -target $(TARGET) -runname $(RUNNAME) -log logs/$(RUNNAME)_$$testname.log -run-wait -testpatt $$testname -generate-html ; \
 	done
 
-# -run-wait; \
+runinteg :
+	flock --nonblock --verbose run-one.lock ./scripts/run-one-branch.sh
 
 dashboard : runs logs
 	dashboard -rows 20 &

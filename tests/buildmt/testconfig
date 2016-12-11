@@ -1,0 +1,83 @@
+[var]
+mtrah #{getenv MT_RUN_AREA_HOME}
+th #{getenv MT_LINKTREE}/#{getenv MT_TARGET}/#{getenv MT_RUNNAME}
+
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+
+# Add additional steps here. Format is "stepname script"
+[ezsteps]
+openfossil   (mkdir -p megatest;cd megatest;fossil open $MEGATEST_FOSSIL_FILE --nested;fossil co $INTEG_BRANCH)
+# verifymtpath should point to a NON EXISTANT area right now and dirname MTPATH should exist!
+verifymtpath (if [[ -e $MTPATH/megatest ]];then echo NOVAR;fi;if [[ -e $(dirname $MTPATH) ]];then echo OK;else echo NOVAR;fi)
+drymerge     (cd megatest;fossil merge $release -n)
+mergebranch  (cd megatest;fossil merge $release)
+buildmt      (export PATH="${CHICKEN_PATH_BASE}/${CHICKEN_VERSION}/bin:${PATH}";cd megatest;make -j && make install)
+
+# reset the mode and waiton
+[requirements]
+waiton
+priority 0
+mode normal
+
+[pre-launch-env-vars]
+# Modify path to find chicken - doesn't work, fix it?
+# PATH #{getenv CHICKEN_PATH_BASE}/\$CHICKEN_VERSION/bin:$PATH
+LD_LIBRARY_PATH #{getenv CHICKEN_PATH_BASE}/#{getenv CHICKEN_VERSION}/lib
+
+# Logpro rules for each step can be captured here in the testconfig
+# note: The ;; after the stepname and the leading whitespace are required
+#
+[logpro]
+
+verifymtpath ;; verify that mtpath is set apropriately
+  (expect:error in "LogFileBody" = 0 "mtpath not set" #/NOVAR/)
+
+drymerge ;; test that there are no conflicts
+  (expect:error in "LogFileBody" = 0 "merge conflicts" #/merge conflicts/)
+
+openfossil ;; rules for checking output from running step (open mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested) with command mkdir -p megatest;cd megatest;fossil opeFOSSIL_FILE --nested
+  ;; You should have at least one expect:required. This ensures that your process ran
+  ;; comment out the line below and replace "put pattern here" with a pattern that will
+  ;; always be seen in your log file if the step runs successfully.
+  ;;
+  ;; (expect:required in "LogFileBody" > 0 "Put description here" #/put pattern here/)
+  ;;
+  ;; You may need ignores to suppress false error or warning hits from the later expects
+  ;; NOTE: Order is important here!
+  (expect:ignore   in "LogFileBody"  < 99 "Ignore the word error in comments" #/^\/\/.*error/)
+  (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
+  (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
+
+buildmt ;; rules for checking output from running step (build cd megatest;make -j && make install) with command cd megatest;make -j && make install
+  ;; You should have at least one expect:required. This ensures that your process ran
+  ;; comment out the line below and replace "put pattern here" with a pattern that will
+  ;; always be seen in your log file if the step runs successfully.
+  ;;
+  ;; (expect:required in "LogFileBody" > 0 "Put description here" #/put pattern here/)
+  ;;
+  ;; You may need ignores to suppress false error or warning hits from the later expects
+  ;; NOTE: Order is important here!
+  (expect:ignore   in "LogFileBody"  < 99 "Ignore the word error in comments" #/^\/\/.*error/)
+  (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
+  (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
+
+mergebranch ;; rules for checking output from running step (cobranch cd megatest;fossil co $release) with command cd megatest;fossil co $release
+  ;; You should have at least one expect:required. This ensures that your process ran
+  ;; comment out the line below and replace "put pattern here" with a pattern that will
+  ;; always be seen in your log file if the step runs successfully.
+  ;;
+  ;; (expect:required in "LogFileBody" > 0 "Put description here" #/put pattern here/)
+  ;;
+  ;; You may need ignores to suppress false error or warning hits from the later expects
+  ;; NOTE: Order is important here!
+  (expect:ignore   in "LogFileBody"  < 99 "Ignore the word error in comments" #/^\/\/.*error/)
+  (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
+  (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
+
+# test_meta is a section for storing additional data on your test
+[test_meta]
+author matt
+owner  matt
+description Open the megatest fossil and build the specified branch
+tags tagone,tagtwo
+reviewed never

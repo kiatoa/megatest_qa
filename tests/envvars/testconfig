@@ -20,12 +20,14 @@ results ;;
    (expect:required in "LogFileBody" > 0 "Some PASS expected"    #/Test:.*Status:.*PASS/)
  
 
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+
 [requirements]
 # waiton testpatt_envvar
 priority 1
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-mode toplevel
+# mode toplevel
 
 
 [pre-launch-env-overrides]

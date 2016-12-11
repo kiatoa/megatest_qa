@@ -17,10 +17,12 @@ cleantop $MTRUNNER #{get misc rdir} $MTPATH megatest -remove-runs #{get var tp} 
 runall   $MTRUNNER #{get misc rdir} $MTPATH megatest -run         #{get var tp}  #{get var targ} -runname #{get misc rname} -run-wait
 results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname} #{get var targ} -runname #{get misc rname} 
 
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+
 [requirements]
 # waiton itemwait
 priority 0
 # runtimelim 15m
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-mode toplevel
+# mode toplevel

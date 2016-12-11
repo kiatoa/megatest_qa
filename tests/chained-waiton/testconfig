@@ -32,13 +32,15 @@ item_list ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+
 [requirements]
 # waiton testpatt
 priority 0
 runtimlim 15m
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-mode toplevel
+# mode toplevel
 
 
 # test2 : fullprep

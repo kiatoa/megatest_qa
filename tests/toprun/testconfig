@@ -5,6 +5,8 @@ rdir  #{getenv MT_TEST_RUN_DIR}/fullrun
 [setup]
 submegatest #{get misc rdir}
 
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+
 [ezsteps]
 rsync1   rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/fullrun/ ./fullrun/
 rsync2   rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/simplerun/ ./simplerun/
@@ -19,4 +21,4 @@ results  $MTRUNNER #{get misc rdir} $MTPATH megatest -list-runs #{get misc rname
 priority 10
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-mode toplevel
+# mode toplevel

@@ -26,13 +26,14 @@ clean ;;
 chk-filt ;;
   (expect:error in "LogFileBody" = 0 "Filter test failure" #/Test: filter.*State: COMPLETED.*Status: (FAIL|ABORT|CHECK)/ )
 
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 [requirements]
 # waiton testpatt
 priority 0
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
-mode toplevel
+# mode toplevel
 
 [test_meta]
 author tyardeni

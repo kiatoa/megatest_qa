@@ -32,7 +32,7 @@ loadstatus=$?
 if [[ `basename $PWD` == "mustfail" ]];then
   $MT_MEGATEST -test-status :state COMPLETED :status FAIL
 else
-  $MT_MEGATEST -test-status :state COMPLETED :status $loadstatus -m "This is a test level comment" :value 10e6 :expected_value 1.1e6 :tol 100e3 :category nada :variable sillyvar :units mFarks :comment "This is the value/expected comment"
+  $MT_MEGATEST -test-status :state COMPLETED :status $loadstatus -m "This is a test level comment" :value 10e6 :expected 1.1e6 :tol 100e3 :category nada :variable sillyvar :units mFarks :comment "This is the value/expected comment"
 fi
 
 env > envfile.txt
