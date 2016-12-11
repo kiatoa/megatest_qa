@@ -32,7 +32,7 @@ item_list ;;
   (expect:error in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 
-[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 [requirements]
 # waiton testpatt

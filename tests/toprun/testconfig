@@ -5,7 +5,7 @@ rdir  #{getenv MT_TEST_RUN_DIR}/fullrun
 [setup]
 submegatest #{get misc rdir}
 
-[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 [ezsteps]
 rsync1   rsync -av --exclude '*.db' $MT_RUN_AREA_HOME/fullrun/ ./fullrun/

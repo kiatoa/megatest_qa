@@ -30,7 +30,7 @@ listruns ;; verify that listruns ran in a read-only area
    (expect:error in "LogFileBody" = 0 "No WARN allowed"        #/warn/i)
    (expect:required in "LogFileBody" > 0 "Expect some noise"   #/.*/)
 
-[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 [requirements]
 

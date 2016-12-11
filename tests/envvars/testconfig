@@ -20,7 +20,7 @@ results ;;
    (expect:required in "LogFileBody" > 0 "Some PASS expected"    #/Test:.*Status:.*PASS/)
  
 
-[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 [requirements]
 # waiton testpatt_envvar

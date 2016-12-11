@@ -13,7 +13,7 @@ cleansimple   $MTRUNNER $MT_TEST_RUN_DIR/dep-tests $MTPATH megatest -remove-runs
 simple        $MTRUNNER $MT_TEST_RUN_DIR/dep-tests $MTPATH megatest -run         -testpatt test2/%/ptran -target simple/0 -runname #{get var tname} -run-wait
 simpleresults $MTRUNNER $MT_TEST_RUN_DIR/dep-tests $MTPATH megatest -list-runs #{get var tname}           -target simple/0
 
-[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 [requirements]
 # -mrw- no need for this test to waiton anything.

@@ -2,7 +2,7 @@
 ;;  
 ;;   License GPL.
 
-(define logbody "LogFileBody")
+;; (define logbody "LogFileBody")
 
 (for-each 
   (lambda (testname itempath)

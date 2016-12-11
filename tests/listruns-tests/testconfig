@@ -26,7 +26,7 @@ clean ;;
 chk-filt ;;
   (expect:error in "LogFileBody" = 0 "Filter test failure" #/Test: filter.*State: COMPLETED.*Status: (FAIL|ABORT|CHECK)/ )
 
-[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 [requirements]
 # waiton testpatt

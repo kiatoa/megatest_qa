@@ -2,7 +2,7 @@
 mtrah #{getenv MT_RUN_AREA_HOME}
 th #{getenv MT_LINKTREE}/#{getenv MT_TARGET}/#{getenv MT_RUNNAME}
 
-[include #{getenv MT_RUN_AREA_HOME}/std-items.config]
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
 
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
