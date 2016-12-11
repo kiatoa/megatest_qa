@@ -2,28 +2,20 @@
 # Add additional steps here. Format is "stepname script"
 [ezsteps]
 # go to first
-commitmerge cd  dirname $(dirname $(megatest -test-files 'megatest/bin/megatest' -target $MT_TARGET -runname $MT_RUNNAME -testpatt buildmt/%));fossil commit -m "Committing automated merge of $MT_TARGET into $INTEG_BRANCH"
-# $(echo $MT_LINKTREE/$MT_TARGET/$MT_RUNNAME/buildmt/*/megatest|cut -f1 -d' ')
+commitmerge (cd $(dirname $(dirname \
+                $(megatest -test-files 'megatest/bin/megatest' -target $MT_TARGET -runname $MT_RUNNAME -testpatt buildmt/%)));\
+             fossil commit -m "Automated merge of $MT_TARGET into $INTEG_BRANCH")
 
 # Test requirements are specified here, we depend on all tests being PASS. Then we can do the commit.
 [requirements]
 waiton [system echo $STDTESTS|tr ',' ' ']
 priority 0
 
-# Logpro rules for each step can be captured here in the testconfig
-# note: The ;; after the stepname and the leading whitespace are required
+# Logpro rules
 #
 [logpro]
 
 commitmerge ;; rules for checking output from running step commitmerge
-  ;; You should have at least one expect:required. This ensures that your process ran
-  ;; comment out the line below and replace "put pattern here" with a pattern that will
-  ;; always be seen in your log file if the step runs successfully.
-  ;;
-  ;; (expect:required in "LogFileBody" > 0 "Put description here" #/put pattern here/)
-  ;;
-  ;; You may need ignores to suppress false error or warning hits from the later expects
-  ;; NOTE: Order is important here!
   (expect:ignore   in "LogFileBody"  < 99 "Ignore the word error in comments" #/^\/\/.*error/)
   (expect:warning  in "LogFileBody"  = 0 "Any warning" #/warn/)
   (expect:error    in "LogFileBody"  = 0 "Any error"  (list #/ERROR/ #/error/)) ;; but disallow any other errors
@@ -33,5 +25,5 @@ commitmerge ;; rules for checking output from running step commitmerge
 author matt
 owner  matt
 description If all prior tests pass commit the merge.
-tags tagone,tagtwo
+tags integ,task
 reviewed never
