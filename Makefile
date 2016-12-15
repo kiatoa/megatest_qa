@@ -1,21 +1,16 @@
-RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton
-GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test 
+RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton,tconfdisks
+GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test,tconfdisks
 
 # NOT READY:  nested_mt
 ITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(ITER))
 TARGET ?= $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')/$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
 
+# Templates are separate testsuites stored under the megatest_qa repo for use as DUTs in the megatest functional testsuite
+#
 TEMPLATES=chained-waiton dep-tests dynamic-waiton-example envvars fslsync fullrun installall itemmap itemmap2 listruns-tests mintest nested_mt rerunclean runconfig-tests simplerun speedtest
 
-
-
-
-
-
 all :  onerun
-
-
 
 slowsafe : runs
 	for testname in $(RUNTESTS); do \
