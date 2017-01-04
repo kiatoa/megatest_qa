@@ -11,5 +11,5 @@ author matt
 owner  bob
 description This test runs a single ezstep which is expected to pass, no logpro file.
 
-tags first,single
+tags first,single,testing_tags
 reviewed 09/10/2011, by Matt
