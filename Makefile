@@ -2,10 +2,10 @@ RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests it
 GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test 
 
 # NOT READY:  nested_mt
-ITER    ?= a
-RUNNAME ?= $(shell date +ww%U.%u$(ITER))
+RUNITER ?= a
+RUNNAME ?= $(shell date +ww%U.%u$(RUNITER))
 BRANCH  =  $(shell (cd ..;fossil branch)|grep '*'|awk '{print $$2}')
-ITER    = w$(shell date +%U.%u)-$(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
+ITER    =  $(shell (cd ..;fossil info)|grep checkout|awk '{print $$2}'|sed 's/^\(....\).*/\1/')
 TS_MODE ?= dev
 TARGET  ?= $(BRANCH)/$(ITER)/$(TS_MODE)
 NORMTESTPATT = toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
