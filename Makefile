@@ -1,5 +1,5 @@
-RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton
-GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test 
+RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton,tconfdisks
+GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test,tconfdisks
 
 # NOT READY:  nested_mt
 RUNITER ?= a
@@ -11,6 +11,8 @@ TARGET  ?= $(BRANCH)/$(ITER)/$(TS_MODE)
 NORMTESTPATT = toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
 EXTENDEDPATT = $(NORMTESTPATT),test2,ro_test,itemmap,chained-waiton
 
+# Templates are separate testsuites stored under the megatest_qa repo for use as DUTs in the megatest functional testsuite
+#
 TEMPLATES=chained-waiton dep-tests dynamic-waiton-example envvars fslsync fullrun installall itemmap itemmap2 listruns-tests mintest nested_mt rerunclean runconfig-tests simplerun speedtest
 
 all :  onerun

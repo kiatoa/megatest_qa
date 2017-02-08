@@ -35,5 +35,7 @@ priority 0
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 # mode toplevel
 
+[meta]
+tags smoketest,integration
 
 # test2 : fullprep
