@@ -33,3 +33,7 @@ priority 1
 [pre-launch-env-overrides]
 # NBFAKE_HOST orcf1002.to
 
+[test_meta]
+tags quick
+
+
