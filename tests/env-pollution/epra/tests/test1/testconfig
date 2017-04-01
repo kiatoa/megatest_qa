@@ -1,7 +1,7 @@
 # Add additional steps here. Format is "stepname script"
 
 [setup]
-runscript main.csh
+runscript main.sh
 
 
 # Test requirements are specified here
