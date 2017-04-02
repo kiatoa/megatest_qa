@@ -12,7 +12,7 @@ priority 0
 # Iteration for your tests are controlled by the items section
 [items]
 # PARTOFDAY morning noon afternoon evening night
-SLEEPYTIME 1 5 10 15
+SLEEPYTIME 1 
 
 
 # test_meta is a section for storing additional data on your test
