@@ -1,0 +1,16 @@
+#!/bin/bash
+TARGET=$1
+RUNNAME=$2
+TESTPATT=$3
+FLAGFILE=$4
+
+flagfile=lt/$TARGET/$RUNNAME/$TESTPATT/$FLAGFILE
+while ! test -f $flagfile ; do
+      date
+      echo waiting for $flagfile
+      sleep 1
+done
+date
+echo got $flagfile
+#megatest -remove-runs -target $TARGET -runname $RUNNAME -testpatt $TESTPATT -v
+megatest -target $TARGET -runname $RUNNAME -run -testpatt $TESTPATT -clean-cache
