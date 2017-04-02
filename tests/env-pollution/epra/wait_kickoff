@@ -4,6 +4,7 @@ RUNNAME=$2
 TESTPATT=$3
 FLAGFILE=$4
 
+
 flagfile=lt/$TARGET/$RUNNAME/$TESTPATT/$FLAGFILE
 while ! test -f $flagfile ; do
       date
