@@ -1,0 +1,30 @@
+[misc]
+rname envpollute
+rdir  #{getenv MT_TEST_RUN_DIR}/epra
+
+[setup]
+submegatest #{get misc rdir}
+
+[ezsteps]
+reset             cd #{get misc rdir} && make reset
+start_restarter   $MTRUNNER #{get misc rdir} $MTPATH ./wait_kickoff kickoff &
+run               $MTRUNNER #{get misc rdir} $MTPATH megatest -run -run-wait -testpatt % -target SYSTEM_val/RELEASE_val -runname go -clean-cache
+
+[logpro]
+run ;;
+  (expect:required  in "LogFileBody" > 2  "expect 4 PASSes" #/^COMPLETED   PASS/)
+  (expect:error     in "LogFileBody" = 0  "expect 0 FAILs" #/^COMPLETED   FAIL/)
+  (expect:ignore    in "LogFileBody" >= 0 "Ignore issues due to NFS" #/ERROR: There was a problem removing/)
+  (expect:ignore    in "LogFileBody" >= 0 "Ignore word error in meta updates" #/Updating.*description to.*error.*/)
+  (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
+
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+
+[requirements]
+# mrw: No need that I can think of for this to wait on anything
+# waiton toprun
+priority 2
+runtimelim 20m
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+# mode toplevel
