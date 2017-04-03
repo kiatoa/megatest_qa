@@ -1,0 +1,17 @@
+[setup]
+runscript main.sh
+
+
+[requirements]
+# waiton setup
+priority 0
+
+[items]
+SLEEPYTIME 1 
+
+
+# test_meta is a section for storing additional data on your test
+[test_meta]
+author bb
+owner  bb
+description test which (along with ./wait_kickoff which simulates user running a clean; run test with -clean-cache) reproduces env pollution
