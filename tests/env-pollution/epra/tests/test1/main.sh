@@ -13,16 +13,19 @@ export PATH=/pollution:$PATH # POLLUTE the environment .  This should NOT get pr
 # force cache cleaning
 echo "after PATH=$PATH"
 
+if [[ $SLEEPYTIME == 1 ]]; then
+    echo for iter 1, exit immediately
+    megatest -test-status :state COMPLETED :status PASS
+    megatest -step step1 :state end :status 0
+    exit 0
+else
+    touch $MT_RUN_AREA_HOME/kickoff # trigger test clean/restart
+    sleep 5  # during this pause, ./wait_kickoff will simulate user running "megatest -target $TARGET -runname $RUNNAME -run -testpatt $TESTPATT -clean-cache", clearing .megatest.cfg-## cache file
+    sleep $SLEEPYTIME
+    megatest -test-status :state COMPLETED :status PASS
+    megatest -step step1 :state end :status 0
+    exit 0
+fi
 
-touch kickoff # trigger test clean/restart
-sleep 10  # during this pause, ./wait_kickoff will simulate user running "megatest -target $TARGET -runname $RUNNAME -run -testpatt $TESTPATT -clean-cache", clearing .megatest.cfg-## cache file
-sleep $SLEEPYTIME
 
-megatest -step step1 :state end :status 0  # this triggers megatest to rebuild cache, reeval $PATH with /pollution above, counter to user expectation and 1.60/29a behavior
-
-
-# force cache rebuild
-megatest -test-status :state COMPLETED :status PASS
-
-exit 0
 

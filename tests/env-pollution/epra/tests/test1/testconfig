@@ -7,7 +7,7 @@ runscript main.sh
 priority 0
 
 [items]
-SLEEPYTIME 1 
+SLEEPYTIME 1 2 3
 
 
 # test_meta is a section for storing additional data on your test

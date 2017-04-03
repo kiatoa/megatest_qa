@@ -1,0 +1,15 @@
+#!/bin/bash
+flagfile=$1
+TARGET=SYSTEM_val/RELEASE_val
+TESTPATT=test1/1
+RUNNAME=go
+
+while ! test -f $flagfile ; do
+      date  >> wait_kickoff.log
+      echo waiting for $flagfile >> wait_kickoff.log
+      sleep 1
+done
+date >> wait_kickoff.log
+echo got $flagfile >> wait_kickoff.log
+#megatest -remove-runs -target $TARGET -runname $RUNNAME -testpatt $TESTPATT -v
+megatest -target $TARGET -runname $RUNNAME -run -testpatt $TESTPATT -clean-cache >& mt_kickoff.log
