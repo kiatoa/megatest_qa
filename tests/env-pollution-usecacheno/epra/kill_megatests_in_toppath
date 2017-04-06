@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+def get_mtest_dboard_pids(this_cwd)
+  rv = []
+  `ls -1 /proc/`.split(/\n/).each{|procdir|
+    if m=procdir.match(/^(\d+)$/)
+      begin
+        pid = m[1]
+        proc_cwd=File.readlink("/proc/#{pid}/cwd")
+        if proc_cwd == this_cwd
+          proc_exe=File.readlink("/proc/#{pid}/exe")
+          if proc_exe.match(/\/(mtest|dboard)$/)
+            rv << pid
+          end
+        end
+    rescue
+      end
+    end
+  }
+  return rv
+end
+
+def kill_pids(pids)
+  system "kill #{pids.join(" ")}"
+  sleep 5
+  kill9pids = pids.find_all{|pid|
+    File.exists? "/proc/#{pid}/cwd"
+  }
+  if kill9pids.length > 0
+    system "kill #{kill9pids.join(" ")}"
+  end
+end
+  
+pids=get_mtest_dboard_pids(ENV['PWD'])
+if pids.length > 0
+  puts "kill mtest/dboard running in #{ENV['PWD']} pids #{pids}"
+  kill_pids pids
+else
+  puts "no pids to kill"
+end
