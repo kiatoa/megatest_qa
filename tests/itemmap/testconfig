@@ -50,5 +50,5 @@ runtimelim 15m
 author tyardeni
 owner  tyardeni
 description Test itemmap substitutions
-tags items
+tags items,quick,dev,integ
 

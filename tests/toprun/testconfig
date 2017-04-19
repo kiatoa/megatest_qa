@@ -22,3 +22,6 @@ priority 10
 
 # This is a "toplevel" test, it does not require waitons to be non-FAIL to run
 # mode toplevel
+
+[test_meta]
+tags quick,dev,integ

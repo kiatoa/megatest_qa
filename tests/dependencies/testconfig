@@ -22,3 +22,5 @@ simpleresults $MTRUNNER $MT_TEST_RUN_DIR/dep-tests $MTPATH megatest -list-runs #
 priority 8
 runtimelim 15m
 
+[test_meta]
+tags quick,dev,integ

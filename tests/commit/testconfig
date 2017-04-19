@@ -25,5 +25,6 @@ commitmerge ;; rules for checking output from running step commitmerge
 author matt
 owner  matt
 description If all prior tests pass commit the merge.
-tags integ,task
+tags integ
+
 reviewed never

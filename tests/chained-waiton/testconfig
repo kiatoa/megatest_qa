@@ -44,3 +44,6 @@ runtimlim 15m
 
 
 # test2 : fullprep
+
+[test_meta]
+tags quick,dev,integ

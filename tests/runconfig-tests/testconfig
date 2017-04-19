@@ -34,5 +34,5 @@ priority 0
 author tyardeni
 owner  tyardeni
 description Test preclean/rerun behavior
-tags rerunclean
+tags rerunclean,quick,dev,integ
 

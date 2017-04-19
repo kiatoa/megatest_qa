@@ -79,5 +79,5 @@ mergebranch ;; rules for checking output from running step (cobranch cd megatest
 author matt
 owner  matt
 description Open the megatest fossil and build the specified branch
-tags tagone,tagtwo
+tags integ
 reviewed never

@@ -36,6 +36,6 @@ priority 0
 # mode toplevel
 
 [meta]
-tags smoketest,integration
+tags smoketest,integ,dev,quick
 
 # test2 : fullprep

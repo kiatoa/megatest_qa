@@ -34,6 +34,6 @@ priority 1
 # NBFAKE_HOST orcf1002.to
 
 [test_meta]
-tags quick
+tags quick,dev,integ
 
 

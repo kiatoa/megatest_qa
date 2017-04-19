@@ -41,3 +41,5 @@ priority 1
 
 
 # test2 : fullprep
+[test_meta]
+tags quick,dev,integ
