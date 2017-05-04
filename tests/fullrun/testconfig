@@ -21,6 +21,8 @@ cleantop ;;
 runall ;;
   (expect:ignore    in "LogFileBody" >= 0 "Ignore issues due to NFS" #/ERROR: There was a problem removing/)
   (expect:ignore    in "LogFileBody" >= 0 "Ignore word error in meta updates" #/Updating.*description to.*error.*/)
+  (expect:ignore    in "LogFileBody" >= 0 "Ignore logpro error rules in the output"     #/\(expect:(error|required) /)
+  (expect:ignore    in "LogFileBody" >= 0 "Ignore word error on WARNING: content ... message" #/^WARNING: content/)
   (expect:required  in "LogFileBody" > 0 "need to see at least one unrecognised waiton" #/ERROR: test special has unrecognised waiton testname/)
   (expect:required  in "LogFileBody" > 0 "need to see at least one dynamic_waiton"      #/ERROR: test dynamic_waiton has listed itself as a waiton/)
   (expect:required  in "LogFileBody" > 0 "expecting to see some Failed launch"          #/ERROR: Failed to launch test blocktestxz/)
