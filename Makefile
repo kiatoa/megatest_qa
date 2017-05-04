@@ -1,5 +1,5 @@
 RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton,tconfdisks
-GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test,tconfdisks,env-pollution,env-pollution-usecacheno
+GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test,tconfdisks,env-pollution,env-pollution-usecacheno,skip-on-fileexists
 
 # NOT READY:  nested_mt
 RUNITER ?= a

@@ -12,10 +12,8 @@ run               $MTRUNNER #{get misc rdir} $MTPATH megatest -run -run-wait -te
 
 [logpro]
 run ;;
-  (expect:required  in "LogFileBody" > 2  "expect 8 PASSes" #/^COMPLETED   PASS/)
-  (expect:error     in "LogFileBody" = 0  "expect 0 FAILs" #/^COMPLETED   FAIL/)
-  (expect:ignore    in "LogFileBody" >= 0 "Ignore issues due to NFS" #/ERROR: There was a problem removing/)
-  (expect:ignore    in "LogFileBody" >= 0 "Ignore word error in meta updates" #/Updating.*description to.*error.*/)
+  (expect:required  in "LogFileBody" > 1  "expect 8 PASSes" #/^COMPLETED\s+SKIP.*\/skiptest-second/)
+  (expect:error  in "LogFileBody" = 0  "expect 8 PASSes" #/^COMPLETED\s+FAIL.*\/skiptest-second/)
   (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 [include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
