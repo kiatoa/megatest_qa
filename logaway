@@ -1,0 +1,11 @@
+#!/bin/sh
+if [[ ! -e aside-logs ]]; then mkdir aside-logs; fi
+asidedir=aside-logs/`date +%s`
+mkdir $asidedir
+
+if [[ -e logs ]]; then
+  mv logs $asidedir
+  mkdir logs
+fi
+
+mv -fv logpro_style.css *.lock logs-aside* NBFAKE-* *.dat *.done *.html *.log.gz *.log *.run $asidedir/. 2>/dev/null

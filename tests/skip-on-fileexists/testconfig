@@ -12,8 +12,8 @@ run               $MTRUNNER #{get misc rdir} $MTPATH megatest -run -run-wait -te
 
 [logpro]
 run ;;
-  (expect:required  in "LogFileBody" > 1  "expect 8 PASSes" #/^COMPLETED\s+SKIP.*\/skiptest-second/)
-  (expect:error  in "LogFileBody" = 0  "expect 8 PASSes" #/^COMPLETED\s+FAIL.*\/skiptest-second/)
+  (expect:required  in "LogFileBody" = 1  "expect skip for skiptest-second" #/^COMPLETED\s+SKIP.*\/skiptest-second/)
+  (expect:error  in "LogFileBody" = 0  "skiptest-second should not fail." #/^COMPLETED\s+FAIL.*\/skiptest-second/)
   (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 [include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
