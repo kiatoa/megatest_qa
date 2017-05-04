@@ -1,4 +1,5 @@
 #!/bin/sh
+./kill_megatests_in_toppath
 if [[ ! -e aside-logs ]]; then mkdir aside-logs; fi
 asidedir=aside-logs/`date +%s`
 mkdir $asidedir
@@ -8,4 +9,4 @@ if [[ -e logs ]]; then
   mkdir logs
 fi
 
-mv -fv logpro_style.css *.lock logs-aside* NBFAKE-* *.dat *.done *.html *.log.gz *.log *.run $asidedir/. 2>/dev/null
+mv -fv logpro_style.css *.lock logs-aside* NBFAKE-* *.done *.html *.log.gz *.log *.run $asidedir/. 2>/dev/null
