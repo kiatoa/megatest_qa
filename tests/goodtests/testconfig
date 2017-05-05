@@ -1,0 +1,18 @@
+[ezsteps]
+triage   triage.rb #{getenv MT_LINKTREE}/#{getenv MT_TARGET}/#{getenv MT_RUNNAME}
+
+[logpro]
+triage ;;
+  (expect:required in "LogFileBody" = 1 "ok signature required" #/\d+\s+signature-OK/)
+  (expect:error    in "LogFileBody" = 0 "No error sigs allowed" #/^\d+\s+signature-/)
+
+
+[requirements]
+waiton #{getenv GOODTESTS}
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+mode toplevel
+
+
+
+
+

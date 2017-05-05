@@ -11,12 +11,12 @@
 
 argv=ARGV
 allfiles = []
-server_logs = `find logs/ -type f -name 'server*.log' 2>/dev/null`.split /\n/
-allfiles += server_logs
+
 argv.each{|dir|
-  nbfiles = `find #{dir} -type f -name '##*' 2>/dev/null`.split /\n/
-  fakefiles = `find #{dir} -type f -name 'NBFAKE-*' 2>/dev/null`.split /\n/
-  allfiles = allfiles + nbfiles + fakefiles
+  server_logs = `find -L #{dir}/. logs/ -type f -name 'server*.log' 2>/dev/null`.split /\n/
+  nbfiles = `find -L #{dir}/. -type f -name '##*' 2>/dev/null`.split /\n/
+  fakefiles = `find -L #{dir}/. -type f -name 'NBFAKE-*' 2>/dev/null`.split /\n/
+  allfiles = allfiles + nbfiles + fakefiles + server_logs
 }
 
 if argv.length == 0
@@ -54,8 +54,8 @@ sig_patterns = [
                 'FATAL: \*configdat\* was inaccessible! This should never happen.',
                 'This should never happen',
                 'Brute force',
-                '!!ISOENV PRESENT!!'
-
+                '!!ISOENV PRESENT!!',
+                'cannot create socket - Connection refused'
                ]
 
 if allfiles.length == 0
@@ -88,7 +88,7 @@ allfiles.each{|logfile|
 }
 
 $exitcode = 0
-puts "count\tsignature\texample file"
+#puts "count\tsignature\texample file"
 buckets.keys.each{|bucket|
   if bucket != 'OK'
     $exitcode = 1
@@ -97,9 +97,21 @@ buckets.keys.each{|bucket|
 
   example = buckets[bucket][0]
   if example
-    puts "#{count}\tsignature-#{bucket}\t#{example}"
-    if bucket.to_s.match(/^[0-9]+$/)
-      puts "                   `- pattern = /#{sig_patterns[bucket]}/"
+    fullpath = `readlink -f #{example}`
+    #puts "BB> #{bucket}"
+    pat = ""
+    if bucket == 'OK'
+      pat = ""
+    elsif bucket == '??'
+      pat = "Call history (scheme stack dump)"
+    else 
+      pat = "/#{sig_patterns[bucket]}/"
+    end
+        
+    puts "#{count}\tsignature-#{bucket}\t#{pat}"
+    if bucket.to_s.match(/^([0-9]+|\?\?)$/)
+      puts "                   +-- <a href=\"file://#{fullpath}\">unix link</a>  <a href=\"\\\\samba.pdx.intel.com#{ fullpath.gsub(/\//,"\\") }\">samba link</a>"
+      puts "                   `-- path = #{fullpath}"
     end
   else
     puts "#{count}\tsignature-#{bucket}"
