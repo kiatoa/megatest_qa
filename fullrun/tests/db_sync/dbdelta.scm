@@ -18,7 +18,7 @@
 	     (sql db bigquery))
       (close-database db))))
 
-(define main.db (conc (get-environment-variable "MT_DBDIR") "/main.db"))
+(define main.db (conc (get-environment-variable "MT_DBDIR") "/megatest.db"))
 
 (print "Creating file for current db")
 (with-output-to-file "current-db-dump"

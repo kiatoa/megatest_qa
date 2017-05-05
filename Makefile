@@ -1,6 +1,4 @@
 RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton,tconfdisks
-GOODTESTS = runconfig-tests,testpatt,rollup,envvars,rerunclean,listruns-tests,itemwait,dependencies,testpatt_envvar,toprun,fullrun,ro_test,tconfdisks,env-pollution,env-pollution-usecacheno,skip-on-fileexists
-
 
 # NOT READY:  nested_mt
 RUNITER ?= a
@@ -53,13 +51,13 @@ LOGS=$(addprefix logs/$(RUNNAME)/,$(addsuffix .log,$(RUNTESTS)))
 
 parallel : logs $(LOGS)
 
-onerun : logs runs
+onerun-old : logs runs
 	viewscreen "tail -F logs/$(RUNNAME).log"
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(GOODTESTS) -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(GOODTESTS)
 
-triage: logs runs
+onerun: logs runs
 	viewscreen "tail -F logs/$(RUNNAME).log"
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt goodtests
+	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt goodtests  -log logs/$(RUNNAME).log -run-wait -rerun-all -generate-html
 
 clean :
 	rm logs/*
