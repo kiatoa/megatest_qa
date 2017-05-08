@@ -25,7 +25,8 @@ runall ;;
   (expect:ignore    in "LogFileBody" >= 0 "Ignore word error on WARNING: content ... message" #/^WARNING: content/)
   (expect:required  in "LogFileBody" > 0 "need to see at least one unrecognised waiton" #/ERROR: test special has unrecognised waiton testname/)
   (expect:required  in "LogFileBody" > 0 "need to see at least one dynamic_waiton"      #/ERROR: test dynamic_waiton has listed itself as a waiton/)
-  (expect:required-warn in "LogFileBody" > 0 "expecting to see some Failed launch"          #/ERROR: Failed to launch test blocktestxz/ )
+  (expect:ignore    in "LogFileBody" >= 0 "Ignore failed to launch test blocktestxz errors." #/ERROR: Failed to launch test blocktestxz/)
+  ;; (expect:required-warn in "LogFileBody" > 0 "expecting to see some Failed launch"          #/ERROR: Failed to launch test blocktestxz/)
   (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
 
 [include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
