@@ -1,5 +1,7 @@
 RUNTESTS ?= runconfig-tests testpatt rollup envvars rerunclean listruns-tests itemwait dependencies testpatt_envvar toprun fullrun itemmap test2 chained-waiton,tconfdisks
 
+
+
 # NOT READY:  nested_mt
 RUNITER ?= a
 RUNNAME ?= $(shell date +ww%U.%u$(RUNITER))
@@ -9,6 +11,8 @@ TS_MODE ?= dev
 TARGET  ?= $(BRANCH)/$(ITER)/$(TS_MODE)
 NORMTESTPATT = toprun,testpatt_envvar,testpatt,runconfig-tests,rollup,rerunclean,listruns-tests,itemwait,envvars,dependencies,fullrun
 EXTENDEDPATT = $(NORMTESTPATT),test2,ro_test,itemmap,chained-waiton
+
+# note - GOODTESTS definition moved to runconfigs.config
 
 # Templates are separate testsuites stored under the megatest_qa repo for use as DUTs in the megatest functional testsuite
 #
@@ -50,10 +54,6 @@ logs/$(RUNNAME)/%.log : logs/$(RUNNAME) tests/%/testconfig
 LOGS=$(addprefix logs/$(RUNNAME)/,$(addsuffix .log,$(RUNTESTS)))
 
 parallel : logs $(LOGS)
-
-onerun-old : logs runs
-	viewscreen "tail -F logs/$(RUNNAME).log"
-	megatest -run -target $(TARGET) -runname $(RUNNAME) -testpatt $(GOODTESTS)
 
 onerun: logs runs
 	viewscreen "tail -F logs/$(RUNNAME).log"

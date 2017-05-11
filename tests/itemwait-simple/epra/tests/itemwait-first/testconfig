@@ -1,0 +1,23 @@
+[ezsteps]
+thestep itemstep.sh
+
+[logpro]
+thestep ;;
+  (expect:error    in "LogFileBody" = 0 "failed" \
+     #/FAIL/)
+  (expect:required in "LogFileBody" > 0 "passed" \
+     #/PASS/)
+
+
+[items]
+NUM 1 2 3
+
+[requirements]
+# waiton setup
+priority 0
+
+# test_meta is a section for storing additional data on your test
+[test_meta]
+author bb
+owner  bb
+description simplest. test. ever.

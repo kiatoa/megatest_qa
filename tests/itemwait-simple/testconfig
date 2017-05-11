@@ -1,0 +1,27 @@
+[misc]
+rname envpollute
+rdir  #{getenv MT_TEST_RUN_DIR}/epra
+
+[setup]
+submegatest #{get misc rdir}
+
+[ezsteps]
+start_restarter   $MTRUNNER #{get misc rdir} $MTPATH ./wait_kickoff kickoff &
+run               $MTRUNNER #{get misc rdir} $MTPATH megatest -run -run-wait -testpatt % -target SYSTEM_val/RELEASE_val -runname go -clean-cache
+
+[logpro]
+run ;;
+  (expect:required  in "LogFileBody" = 1  "expect failed prereq for itemwait-second" #/^WARNING: test itemwait-second\/2 has FAILED prerequisites/)
+  (expect:required  in "LogFileBody" = 2  "expect 2 passes prereq for itemwait-second" #/COMPLETED   PASS .*itemwait-second\/[13]/)
+  (expect:error     in "LogFileBody" = 0 "No errors allowed" #/error/i)
+
+[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+
+[requirements]
+# mrw: No need that I can think of for this to wait on anything
+# waiton toprun
+priority 2
+runtimelim 20m
+
+# This is a "toplevel" test, it does not require waitons to be non-FAIL to run
+# mode toplevel
