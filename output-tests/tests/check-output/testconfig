@@ -1,0 +1,32 @@
+[ezsteps]
+run-cmd run-cmd $CMD_TO_RUN $OUTPUT_FMT
+chk-cmd verify-output $CMD_TO_RUN.$OUTPUT_FMT $OUTPUT_FMT
+
+
+[requirements]
+mode toplevel
+
+
+[items]
+CMD_TO_RUN #{getenv COMMANDS}
+OUTPUT_FMT #{getenv FORMATS}
+
+
+[logpro]
+run-cmd ;;
+  (expect:required in "LogFileBody" > 0 "Informational message" #/^INFO/ )
+chk-cmd ;;
+  (expect:required in "LogFileBody" > 0 "Start/end test"  #/(?:START|END) TEST/ )
+  (expect:error    in "LogFileBody" = 0 "Invalid format"   #/is not valid/ )
+  (expect:error    in "LogFileBody" = 0 "Error message"   #/^ERROR/ )
+
+
+
+[pre-launch-env-overrides]
+
+
+[test_meta]
+author tyardeni
+owner tardeni
+description Toplevel test to validate waiton chaining
+criteria utility

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+caller=$(readlink -f $0)
+scm=${caller}.scm
+
+export MY_FILENAME=$1; shift
+export MY_FORMAT=$1; shift
+
+[[ -n "$MT_MEGATEST" ]] && MY_MEGATEST=$MT_MEGATEST || MY_MEGATEST=megatest
+
+echo INFO: MY_FILENAME=$MY_FILENAME MY_FORMAT=$MY_FORMAT
+
+export MT_RUNSCRIPT=yes
+$MY_MEGATEST -repl <<__EOF
+(print "INFO: START TEST")
+$(cat $scm)
+(print "INFO: END TEST")
+(exit 0)
+__EOF

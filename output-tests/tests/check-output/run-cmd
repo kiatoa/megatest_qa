@@ -1,0 +1,41 @@
+#!/bin/bash
+
+MY_CMD_TO_RUN=$1; shift
+MY_OUTPUT_FMT=$1; shift
+
+MY_OUTFILE=${MY_CMD_TO_RUN}.${MY_OUTPUT_FMT}
+
+echo INFO: Running $MY_CMD_TO_RUN with format $MY_OUTPUT_FMT
+echo
+
+case $MY_CMD_TO_RUN in
+
+  show-config)
+    echo INFO: $MT_MEGATEST -show-config -dumpmode $MY_OUTPUT_FMT
+    $MT_MEGATEST -show-config -dumpmode $MY_OUTPUT_FMT 2>$MY_OUTFILE.errors |tee $MY_OUTFILE
+    ;;
+
+  show-runconfig)
+    echo INFO: $MT_MEGATEST -show-runconfig -target $MT_TARGET -dumpmode $MY_OUTPUT_FMT
+    $MT_MEGATEST -show-runconfig -target $MT_TARGET -dumpmode $MY_OUTPUT_FMT 2>$MY_OUTFILE.errors |tee $MY_OUTFILE
+    ;;
+
+  list-runs)
+    echo INFO: $MT_MEGATEST -list-runs $MT_RUNNAME -target $MT_TARGET -dumpmode $MY_OUTPUT_FMT
+    $MT_MEGATEST -list-runs $MT_RUNNAME -target $MT_TARGET -dumpmode $MY_OUTPUT_FMT 2>$MY_OUTFILE.errors |tee $MY_OUTFILE
+    ;;
+
+  *)
+    echo ERROR: Invalid command: $MY_CMD_TO_RUN
+    exit 1
+    ;;
+
+esac
+
+
+echo
+echo INFO: Wrote $MY_OUTPUT_FMT data to $MY_OUTFILE
+echo INFO: Errors written to $MY_OUTFILE.errors
+echo
+
+exit 0

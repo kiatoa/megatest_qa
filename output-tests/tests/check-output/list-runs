@@ -1,0 +1,40 @@
+#!/bin/bash
+
+STATE=$1
+STATUS=$2
+
+echo "debug> DAVE was here"
+
+declare -a lr_filt=(\
+  megatest -list-runs $MT_RUNNAME -target $DEPS/$SPEED -state $STATE -status $STATUS)
+
+echo INFO: Checking for tests in STATE=$STATE and STATUS=$STATUS
+echo INFO: RUNNING: ${lr_filt[@]}
+echo
+
+${lr_filt[@]}
+
+echo
+
+echo "INFO: Showing tests matching STATE=$STATE and STATUS=$STATUS"
+let tests=0
+let match=0
+while read line; do
+  let "tests += 1"
+
+  # Added second slash so these substitute ALL commas to pipes - DJL 1/13/16
+  grepstate=${STATE//,/|}
+  grepstatus=${STATUS//,/|}
+
+  grepped=$(echo $line | egrep "State: ($grepstate).*Status: ($grepstatus)")
+
+  if [[ -n "$grepped" ]]; then
+    let "match += 1"
+	echo $line
+  fi
+
+done < <(${lr_filt[@]} 2>/dev/null | grep Test:)
+echo
+
+[[ $tests -eq $match ]] && prefix=INFO || prefix=ERROR
+echo ${prefix}: list-runs returns $tests tests of which $match match the state/status criteria

@@ -1,7 +1,5 @@
-# test2 from the tests/Makefile
 [mytest]
-testname listruns-tests
-
+testname output-tests
 
 [setup]
 submegatest #{getenv MT_TEST_RUN_DIR}/#{get mytest testname}
@@ -14,21 +12,21 @@ NUMTESTS 20
 # Set things up
 copy      rsync -av --exclude '*.db' #{getenv MT_RUN_AREA_HOME}/#{get mytest testname}/ ./#{get mytest testname}/
 clean     $MTRUNNER #{get setup submegatest} $MTPATH megatest -remove-runs -testpatt % -target  %/% -runname %
-run-ex    $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt example  -target std/0 -runname run1 -run-wait
-run-filt  $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt filter  -target std/0 -runname run1 -run-wait
-chk-filt  $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs run1 -target std/0
-
+runtest   $MTRUNNER #{get setup submegatest} $MTPATH megatest -run -testpatt check-output -target $release/$iteration -runname $MT_RUNNAME -run-wait
+check     $MTRUNNER #{get setup submegatest} $MTPATH megatest -list-runs -target $release/$iteration -runname $MT_RUNNAME
 
 [logpro]
 copy ;;
   (expect:error in "LogFileBody" = 0 "rsync error" #/rsync error/ )
 clean ;;
+  (expect:error  in "LogFileBody" = 0 "command not found" #/command not found/)
   (expect:ignore in "LogFileBody" >= 0 "Ignore NFS releated issues" #/ERROR: There was a problem removing/)
   (expect:error  in "LogFileBody"  = 0 "No errors allowed" #/error/i)
-chk-filt ;;
-  (expect:error in "LogFileBody" = 0 "Filter test failure" #/Test: filter.*State: COMPLETED.*Status: (FAIL|ABORT|CHECK)/ )
-
-[include #{getenv MT_RUN_AREA_HOME}/#{getenv testsuite_mode}-items.config]
+runtest ;;
+  (expect:error in "LogFileBody" = 0 "command not found" #/command not found/)
+check ;;
+  (expect:error in "LogFileBody" = 0 "command not found" #/command not found/)
+  (expect:error in "LogFileBody" = 0 "Test failure" #/Test: filter.*State: COMPLETED.*Status: (FAIL|ABORT|CHECK)/ )
 
 [requirements]
 # waiton testpatt
@@ -40,6 +38,6 @@ priority 0
 [test_meta]
 author tyardeni
 owner  tyardeni
-description Test preclean/rerun behavior
+description Test output behavior
 tags rerunclean,quick,dev,integ
 
